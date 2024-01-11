@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { TokenBalance } from "./TokenBalance";
+import { TokenBalance } from "./TokenBalance";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { QRCodeSVG } from "qrcode.react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -87,7 +87,7 @@ export const RainbowConnectButton = () => {
 
               return (
                 <div className="px-2 flex justify-end items-center">
-                  {/* <div
+                  <div
                     className="flex flex-col items-center mr-1 rounded-2xl p-2"
                     style={{
                       minWidth: "6rem",
@@ -97,11 +97,13 @@ export const RainbowConnectButton = () => {
                   >
                     <TokenBalance
                       account={account.address}
-                      token={"0xF386eB6780a1e875616b5751794f909095283860"}
-                      symbol={"lz-fMULTI"}
+                      // token={"0xF386eB6780a1e875616b5751794f909095283860"}
+                      // symbol={"lz-fMULTI"}
+                      token={"0x6CEbb8cD66Fca7E6aca65841Ae3A04B7884F4de8"}
+                      symbol={"FMULTI"}
                       className="min-h-0 h-auto"
                     />
-                  </div> */}
+                  </div>
                   <div className="dropdown dropdown-end leading-3">
                     <label
                       tabIndex={0}
@@ -178,7 +180,7 @@ export const RainbowConnectButton = () => {
                             rel="noopener noreferrer"
                             className="whitespace-nowrap"
                           >
-                            View on Block Explorer
+                            View on Explorer
                           </a>
                         </button>
                       </li>

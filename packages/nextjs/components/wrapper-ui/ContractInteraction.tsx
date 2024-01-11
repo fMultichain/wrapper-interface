@@ -6,13 +6,13 @@ import { ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 export const ContractInteraction = () => {
-  const [newGreeting, setNewGreeting] = useState("");
-
+  const [depositAmount, setDepositAmount] = useState("");
+  // todo: update to deposit
   const { writeAsync, isLoading } = useScaffoldContractWrite({
     contractName: "YourContract",
-    functionName: "setGreeting",
-    args: [newGreeting],
-    value: "0.01",
+    functionName: "deposit", // todo
+    args: [depositAmount],
+    value: "0.01", // todo
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
     },
@@ -25,7 +25,7 @@ export const ContractInteraction = () => {
       <HareIcon className="absolute right-0 bottom-24" />
       <div className="flex flex-col w-full mx-5 sm:mx-8 2xl:mx-20">
         <div className="flex flex-col mt-6 px-7 py-8 bg-base-200 opacity-80 rounded-2xl shadow-lg border-2 border-primary">
-          <span className="text-4xl sm:text-6xl text-black">Convert to lz-FMULTI</span>
+          <span className="text-4xl sm:text-6xl text-black">Upgrade to lz-FMULTI</span>
           <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-5">
             <input
               type="text"
@@ -34,7 +34,7 @@ export const ContractInteraction = () => {
               bg-[length:100%_100%] 
               border border-primary text-lg sm:text-2xl placeholder-white uppercase"
               // bg-[url('/assets/gradient-bg.png')]
-              onChange={e => setNewGreeting(e.target.value)}
+              onChange={e => setDepositAmount(e.target.value)}
             />
             <div className="flex rounded-full border border-primary p-1 flex-shrink-0">
               <div className="flex rounded-full border-2 border-primary p-1">
@@ -56,8 +56,8 @@ export const ContractInteraction = () => {
           </div>
 
           <div className="mt-4 flex gap-2 items-start">
-            <span className="text-sm leading-tight">Price:</span>
-            <div className="badge badge-warning">0.01 ETH + Gas</div>
+            <span className="text-sm leading-tight">Conversion Rate:</span>
+            <div className="badge badge-warning">lz-fMULTI = 20,000,000 FMULTI (?)</div>
           </div>
         </div>
       </div>
