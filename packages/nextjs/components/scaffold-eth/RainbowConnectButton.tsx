@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TokenBalance } from "./TokenBalance";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { QRCodeSVG } from "qrcode.react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -19,7 +20,7 @@ import { getBlockExplorerAddressLink, getTargetNetwork } from "~~/utils/scaffold
 /**
  * Custom Wagmi Connect Button (watch balance + custom design)
  */
-export const RainbowKitCustomConnectButton = () => {
+export const RainbowConnectButton = () => {
   useAutoConnect();
   const networkColor = useNetworkColor();
   const configuredNetwork = getTargetNetwork();
@@ -50,7 +51,7 @@ export const RainbowKitCustomConnectButton = () => {
                 return (
                   <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-error btn-sm dropdown-toggle gap-1">
-                      <span>Wrong network</span>
+                      <span>Wrong Network</span>
                       <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
                     </label>
                     <ul
@@ -85,11 +86,15 @@ export const RainbowKitCustomConnectButton = () => {
 
               return (
                 <div className="px-2 flex justify-end items-center">
-                  <div className="flex flex-col items-center mr-1">
-                    <Balance address={account.address} className="min-h-0 h-auto" />
-                    <span className="text-xs" style={{ color: networkColor }}>
-                      {chain.name}
-                    </span>
+                  <div
+                    className="flex flex-col items-center mr-1 rounded-2xl p-2"
+                    style={{
+                      minWidth: "6rem",
+                      maxWidth: "24rem",
+                      border: "2px solid #e2e8f0",
+                    }}
+                  >
+                    <TokenBalance address={account.address} symbol={"lz-fMULTI"} className="min-h-0 h-auto" />
                   </div>
                   <div className="dropdown dropdown-end leading-3">
                     <label
@@ -105,13 +110,32 @@ export const RainbowKitCustomConnectButton = () => {
                       className="dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
                     >
                       <li>
+                        <div
+                          className="flex flex-col items-center mr-1 rounded-2xl p-2 mt-2 mb-2"
+                          style={{
+                            // minWidth: "full",
+                            // maxWidth: "full",
+                            border: "1px solid #e2e8f0",
+                          }}
+                        >
+                          <Balance address={account.address} className="min-h-0 h-auto" />
+                        </div>
+                      </li>
+                      {/* <li>
+                        <div className="!rounded-xl flex gap-3 py-3 justify-center">
+                        <span className="text-md" style={{ color: '#FFFFFF' }}>
+                          {`Chain ID: ${chain.id}`}
+                        </span>
+                        </div>
+                      </li> */}
+                      <li>
                         {addressCopied ? (
                           <div className="btn-sm !rounded-xl flex gap-3 py-3">
                             <CheckCircleIcon
                               className="text-xl font-normal h-6 w-4 cursor-pointer ml-2 sm:ml-0"
                               aria-hidden="true"
                             />
-                            <span className=" whitespace-nowrap">Copy address</span>
+                            <span className=" whitespace-nowrap">Copy Address</span>
                           </div>
                         ) : (
                           <CopyToClipboard
@@ -128,7 +152,7 @@ export const RainbowKitCustomConnectButton = () => {
                                 className="text-xl font-normal h-6 w-4 cursor-pointer ml-2 sm:ml-0"
                                 aria-hidden="true"
                               />
-                              <span className=" whitespace-nowrap">Copy address</span>
+                              <span className=" whitespace-nowrap">Copy Address</span>
                             </div>
                           </CopyToClipboard>
                         )}
