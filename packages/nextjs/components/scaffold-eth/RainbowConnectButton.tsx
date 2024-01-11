@@ -94,7 +94,12 @@ export const RainbowConnectButton = () => {
                       border: "2px solid #e2e8f0",
                     }}
                   >
-                    <TokenBalance address={account.address} symbol={"lz-fMULTI"} className="min-h-0 h-auto" />
+                    <TokenBalance
+                      account={account.address}
+                      token={"0xF386eB6780a1e875616b5751794f909095283860"}
+                      symbol={"lz-fMULTI"}
+                      className="min-h-0 h-auto"
+                    />
                   </div>
                   <div className="dropdown dropdown-end leading-3">
                     <label
