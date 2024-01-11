@@ -8,6 +8,7 @@ const Home: NextPage = () => {
     <>
       <MetaHeader />
       <div className="flex items-center flex-col flex-grow pt-10">
+        {/* 
         <div className="px-5">
           <h1 className="text-center mb-8">
             <span className="block text-2xl mb-2">Welcome:</span>
@@ -30,29 +31,40 @@ const Home: NextPage = () => {
             </code>
           </p>
         </div>
+    */}
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <SparklesIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Experiment with{" "}
-                <Link href="/example-ui" passHref className="link">
-                  Example UI
-                </Link>{" "}
-                to build your own UI.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
+            <Link href="/wrapper-ui" passHref className="link">
+              <div
+                className="flex flex-col bg-base-100 px-0 py-6 text-center items-center max-w-sm rounded-3xl"
+                style={{
+                  width: "8rem",
+                  height: "8rem",
+                  border: "8px solid black",
+                }}
+              >
+                <SparklesIcon className="h-[72px] w-[72px] fill-secondary" />
+                {/* <p>
+                  Wrapper UI
+                </p> */}
+              </div>
+            </Link>{" "}
+            <Link href="/blockexplorer" passHref className="link">
+              <div
+                className="flex flex-col bg-base-100 px-0 py-6 text-center items-center max-w-sm rounded-3xl"
+                style={{
+                  width: "8rem",
+                  height: "8rem",
+                  border: "8px solid black",
+                }}
+              >
+                <MagnifyingGlassIcon className="h-[72px] w-[72px] fill-secondary" />
+                {/* <p>
                   Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
+              </p> */}
+              </div>
+            </Link>{" "}
           </div>
         </div>
       </div>

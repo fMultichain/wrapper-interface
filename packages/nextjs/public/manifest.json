@@ -1,7 +1,7 @@
 {
-    "name": "SCAFFOLD-ETH 2 APP",
-    "short_name": "SE2APP",
-    "description": "A Progressive Web App built with Scaffold-ETH-2",
+    "name": "lz-fMULTI Wrapper",
+    "short_name": "lz-fMULTI",
+    "description": "Wrapper for lz-fMULTI",
     "start_url": "/",
     "display": "fullscreen",
     "background_color": "#ffffff",
@@ -9,14 +9,14 @@
     "orientation": "portrait",
     "icons": [
       {
-        "src": "/logo.svg",
+        "src": "/logo.png",
         "sizes": "192x192",
-        "type": "image/svg"
+        "type": "image/png"
       },
       {
-        "src": "/logo.svg",
+        "src": "/logo.png",
         "sizes": "512x512",
-        "type": "image/svg"
+        "type": "image/png"
       }
     ]
   }
