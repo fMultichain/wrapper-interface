@@ -6,7 +6,7 @@ import { ContractInteraction } from "~~/components/wrapper-ui/ContractInteractio
 const WrapperUI: NextPage = () => {
   return (
     <>
-      <MetaHeader title="Wrapper UI | lz-fMULTI" description="Wrap FMULTI to lz-fMULTI.">
+      <MetaHeader title="Wrapper | lz-fMULTI" description="Wrap FMULTI to lz-fMULTI.">
         {/* We are importing the font this way to lighten the size of SE2. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />

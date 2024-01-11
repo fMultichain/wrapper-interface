@@ -1,57 +1,58 @@
-import React, { useCallback, useRef, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { Bars3Icon, SparklesIcon } from "@heroicons/react/24/outline";
+// import { useRouter } from "next/router"
+// import { Bars3Icon, SparklesIcon } from "@heroicons/react/24/outline"
 import { RainbowConnectButton } from "~~/components/scaffold-eth";
-import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
-  const router = useRouter();
-  const isActive = router.pathname === href;
+// import { useOutsideClick } from "~~/hooks/scaffold-eth"
 
-  return (
-    <Link
-      href={href}
-      passHref
-      className={`${
-        isActive ? "bg-secondary shadow-md" : ""
-      } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
-    >
-      {children}
-    </Link>
-  );
-};
+// const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+//   const router = useRouter();
+//   const isActive = router.pathname === href;
+
+//   return (
+//     <Link
+//       href={href}
+//       passHref
+//       className={`${
+//         isActive ? "bg-secondary shadow-md" : ""
+//       } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+//     >
+//       {children}
+//     </Link>
+//   );
+// };
 
 /**
  * Site header
  */
 export const Header = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const burgerMenuRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(
-    burgerMenuRef,
-    useCallback(() => setIsDrawerOpen(false), []),
-  );
+  // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // const burgerMenuRef = useRef<HTMLDivElement>(null);
+  // useOutsideClick(
+  //   burgerMenuRef,
+  //   useCallback(() => setIsDrawerOpen(false), []),
+  // );
 
-  const navLinks = (
-    <>
-      {/* <li>
-        <NavLink href="/">Home</NavLink>
-      </li> */}
-      <li>
-        <NavLink href="/wrapper-ui">
-          <SparklesIcon className="h-4 w-4" />
-          Wrapper
-        </NavLink>
-      </li>
-    </>
-  );
+  // const navLinks = (
+  //   <>
+  //     {/* <li>
+  //       <NavLink href="/">Home</NavLink>
+  //     </li> */}
+  //     <li>
+  //       <NavLink href="/wrapper-ui">
+  //         <SparklesIcon className="h-4 w-4" />
+  //         Wrapper
+  //       </NavLink>
+  //     </li>
+  //   </>
+  // );
 
   return (
     <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
-        <div className="lg:hidden dropdown" ref={burgerMenuRef}>
+        {/* <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <label
             tabIndex={0}
             className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
@@ -72,17 +73,17 @@ export const Header = () => {
               {navLinks}
             </ul>
           )}
-        </div>
-        <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
-          <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.png" />
+        </div> */}
+        <Link href="/" passHref className="lg:flex items-center lg:gap-2 px-4 lg:px-0 lg:ml-4 lg:mr-6 shrink-0">
+          <div className="flex relative w-12 h-12">
+            <Image alt="logo" className="cursor-pointer" fill src="/favicon.png" />
           </div>
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">lz-fMULTI</span>
-            <span className="text-xs">Crosschain Token</span>
+            <span className="hidden lg:font-bold leading-tight">lz-fMULTI</span>
+            <span className="hidden lg:text-xs">Crosschain</span>
           </div>
         </Link>
-        <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul>
+        {/* <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">{navLinks}</ul> */}
       </div>
       <div className="navbar-end flex-grow mr-4">
         <RainbowConnectButton />

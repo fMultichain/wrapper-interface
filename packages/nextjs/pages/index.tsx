@@ -49,7 +49,7 @@ const Home: NextPage = () => {
               >
                 <SparklesIcon className="h-[72px] w-[72px] fill-secondary" />
                 <p>
-                  Wrapper UI
+                  Wrapper
                 </p>
               </div>
             </Link>{" "}
