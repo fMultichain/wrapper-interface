@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-import { ContractData } from "~~/components/example-ui/ContractData";
-import { ContractInteraction } from "~~/components/example-ui/ContractInteraction";
+import { ContractData } from "~~/components/wrapper-ui/ContractData";
+import { ContractInteraction } from "~~/components/wrapper-ui/ContractInteraction";
 
 const WrapperUI: NextPage = () => {
   return (
