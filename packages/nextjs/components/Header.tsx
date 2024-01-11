@@ -2,8 +2,8 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Bars3Icon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
-import { FaucetButton, RainbowConnectButton } from "~~/components/scaffold-eth";
+import { Bars3Icon, SparklesIcon } from "@heroicons/react/24/outline";
+import { RainbowConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
@@ -42,13 +42,7 @@ export const Header = () => {
       <li>
         <NavLink href="/wrapper-ui">
           <SparklesIcon className="h-4 w-4" />
-          Wrapper UI
-        </NavLink>
-      </li>
-      <li>
-        <NavLink href="/blockexplorer">
-          <MagnifyingGlassIcon className="h-4 w-4" />
-          Block Explorer
+          Wrapper
         </NavLink>
       </li>
     </>
@@ -92,7 +86,6 @@ export const Header = () => {
       </div>
       <div className="navbar-end flex-grow mr-4">
         <RainbowConnectButton />
-        <FaucetButton />
       </div>
     </div>
   );

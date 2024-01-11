@@ -3,7 +3,7 @@ import { ContractReadMethods } from "./ContractReadMethods";
 import { ContractVariables } from "./ContractVariables";
 import { ContractWriteMethods } from "./ContractWriteMethods";
 import { Spinner } from "~~/components/Spinner";
-import { Address, Balance } from "~~/components/scaffold-eth";
+// import { Address, Balance } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useNetworkColor } from "~~/hooks/scaffold-eth";
 import { getTargetNetwork } from "~~/utils/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
@@ -45,14 +45,14 @@ export const ContractUI = ({ contractName, className = "" }: ContractUIProps) =>
         <div className="col-span-1 flex flex-col">
           <div className="bg-base-100 border-base-300 border shadow-md shadow-secondary rounded-3xl px-6 lg:px-8 mb-6 space-y-1 py-4">
             <div className="flex">
-              <div className="flex flex-col gap-1">
+              {/* <div className="flex flex-col gap-1">
                 <span className="font-bold">{contractName}</span>
                 <Address address={deployedContractData.address} />
                 <div className="flex gap-1 items-center">
                   <span className="font-bold text-sm">Balance:</span>
                   <Balance address={deployedContractData.address} className="px-0 h-1.5 min-h-[0.375rem]" />
                 </div>
-              </div>
+              </div> */}
             </div>
             {configuredNetwork && (
               <p className="my-0 text-sm">

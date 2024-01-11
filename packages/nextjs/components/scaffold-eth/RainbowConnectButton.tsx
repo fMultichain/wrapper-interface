@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TokenBalance } from "./TokenBalance";
+// import { TokenBalance } from "./TokenBalance";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { QRCodeSVG } from "qrcode.react";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -13,7 +13,8 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { Address, Balance, BlockieAvatar } from "~~/components/scaffold-eth";
+import { Address, BlockieAvatar } from "~~/components/scaffold-eth";
+// balance
 import { useAutoConnect, useNetworkColor } from "~~/hooks/scaffold-eth";
 import { getBlockExplorerAddressLink, getTargetNetwork } from "~~/utils/scaffold-eth";
 
@@ -86,7 +87,7 @@ export const RainbowConnectButton = () => {
 
               return (
                 <div className="px-2 flex justify-end items-center">
-                  <div
+                  {/* <div
                     className="flex flex-col items-center mr-1 rounded-2xl p-2"
                     style={{
                       minWidth: "6rem",
@@ -100,7 +101,7 @@ export const RainbowConnectButton = () => {
                       symbol={"lz-fMULTI"}
                       className="min-h-0 h-auto"
                     />
-                  </div>
+                  </div> */}
                   <div className="dropdown dropdown-end leading-3">
                     <label
                       tabIndex={0}
@@ -114,7 +115,7 @@ export const RainbowConnectButton = () => {
                       tabIndex={0}
                       className="dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
                     >
-                      <li>
+                      {/* <li>
                         <div
                           className="flex flex-col items-center mr-1 rounded-2xl p-2 mt-2 mb-2"
                           style={{
@@ -125,7 +126,7 @@ export const RainbowConnectButton = () => {
                         >
                           <Balance address={account.address} className="min-h-0 h-auto" />
                         </div>
-                      </li>
+                      </li> */}
                       {/* <li>
                         <div className="!rounded-xl flex gap-3 py-3 justify-center">
                         <span className="text-md" style={{ color: '#FFFFFF' }}>

@@ -1,14 +1,17 @@
-import Link from "next/link";
+// import Link from "next/link";
+import WrapperUI from "./wrapper-ui";
 import type { NextPage } from "next";
-import { MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
+// import { MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MetaHeader } from "~~/components/MetaHeader";
 
 const Home: NextPage = () => {
   return (
     <>
       <MetaHeader />
-      <div className="flex items-center flex-col flex-grow pt-10">
-        {/* 
+      <WrapperUI />
+
+      {/* <div className="flex items-center flex-col flex-grow pt-10"> */}
+      {/* 
         <div className="px-5">
           <h1 className="text-center mb-8">
             <span className="block text-2xl mb-2">Welcome:</span>
@@ -33,8 +36,8 @@ const Home: NextPage = () => {
         </div>
     */}
 
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
+      {/* <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12"> */}
+      {/* <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
             <Link href="/wrapper-ui" passHref className="link">
               <div
                 className="flex flex-col bg-base-100 px-0 py-6 text-center items-center max-w-sm rounded-3xl"
@@ -45,29 +48,14 @@ const Home: NextPage = () => {
                 }}
               >
                 <SparklesIcon className="h-[72px] w-[72px] fill-secondary" />
-                {/* <p>
+                <p>
                   Wrapper UI
-                </p> */}
+                </p>
               </div>
             </Link>{" "}
-            <Link href="/blockexplorer" passHref className="link">
-              <div
-                className="flex flex-col bg-base-100 px-0 py-6 text-center items-center max-w-sm rounded-3xl"
-                style={{
-                  width: "8rem",
-                  height: "8rem",
-                  border: "8px solid black",
-                }}
-              >
-                <MagnifyingGlassIcon className="h-[72px] w-[72px] fill-secondary" />
-                {/* <p>
-                  Block Explorer
-              </p> */}
-              </div>
-            </Link>{" "}
-          </div>
-        </div>
-      </div>
+          </div> */}
+      {/* </div> */}
+      {/* </div> */}
     </>
   );
 };
