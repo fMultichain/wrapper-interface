@@ -40,7 +40,7 @@ export const Header = () => {
         <NavLink href="/">Home</NavLink>
       </li> */}
       <li>
-        <NavLink href="/example-ui">
+        <NavLink href="/wrapper-ui">
           <SparklesIcon className="h-4 w-4" />
           Wrapper UI
         </NavLink>
