@@ -2,6 +2,7 @@ import * as chains from "wagmi/chains";
 
 export type ScaffoldConfig = {
   targetNetwork: chains.Chain;
+  // rpcUrl: string;
   pollingInterval: number;
   alchemyApiKey: string;
   walletConnectProjectId: string;
@@ -13,9 +14,12 @@ const scaffoldConfig = {
   // The network where your DApp lives in
   targetNetwork: chains.fantom,
 
+  // rpcUrl: "https://rpc.ankr.com/fantom",
+  // rpcUrl: "https://rpc.ftm.tools",
+
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
-  pollingInterval: 5000,
+  pollingInterval: 500_000,
 
   // This is ours Alchemy's default API key.
   // You can get your own at https://dashboard.alchemyapi.io
@@ -30,7 +34,7 @@ const scaffoldConfig = {
   walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "3a8170812b534d0ff9d794f19a901d64",
 
   // Only show the Burner Wallet when running on hardhat network
-  onlyLocalBurnerWallet: false,
+  onlyLocalBurnerWallet: true,
 
   /**
    * Auto connect:
