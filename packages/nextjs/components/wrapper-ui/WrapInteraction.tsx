@@ -78,18 +78,18 @@ export const WrapInteraction = () => {
           justifyContent: "center",
           border: "4px solid",
           borderRadius: "10px",
-          borderColor: "#004EE5", // fMULTI BLUE
-          padding: "8px 64px",
-          marginTop: "32px",
+          borderColor: "#ADADAD", // GREY
+          padding: "8px 6px",
+          paddingTop: "16px",
           fontSize: "21px",
           fontWeight: "bold",
-          backgroundColor: "#004EE5",
+          backgroundColor: "#005AFF", // BLUE
           color: "#FFFFFF",
         }}
         onClick={() => handleApproval()}
         className={className}
       >
-        Approve
+        {` Approve`}
       </div>
     );
   };
@@ -108,12 +108,12 @@ export const WrapInteraction = () => {
           justifyContent: "center",
           border: "4px solid",
           borderRadius: "10px",
-          borderColor: "#004EE5", // fMULTI BLUE
-          padding: "8px 64px",
-          marginTop: "32px",
+          borderColor: "#ADADAD", // GREY
+          padding: "8px 4px",
+          paddingTop: "16px",
           fontSize: "21px",
           fontWeight: "bold",
-          backgroundColor: "#004EE5",
+          backgroundColor: "#005AFF", // BLUE
           color: "#FFFFFF",
         }}
         onClick={() =>
@@ -123,7 +123,7 @@ export const WrapInteraction = () => {
         }
         className={className}
       >
-        Upgrade
+        {`Upgrade`}
       </div>
     );
   };
@@ -134,7 +134,7 @@ export const WrapInteraction = () => {
       <CopyIcon className="absolute bottom-0 left-36" />
       <HareIcon className="absolute right-0 bottom-24" />
       <div className="flex flex-col w-full mx-5 sm:mx-8 2xl:mx-20">
-        <div className="flex flex-col mt-6 px-7 py-8 bg-base-200 opacity-80 rounded-2xl shadow-lg border-2 border-primary">
+        <div className="flex flex-col mt-6 px-7 py-8 bg-base-200 opacity-80 rounded-2xl shadow-lg border-4 border-[#005AFF]">
           <div
             className={address ? `grid grid-cols-2 gap-4` : `mb-8`}
             style={{
@@ -148,9 +148,9 @@ export const WrapInteraction = () => {
                   justifyContent: "center",
                   border: "4px solid",
                   borderRadius: "10px",
-                  borderColor: "#FF0000", // fMULTI BLUE
+                  borderColor: "#FF0000", // RED
                   padding: "2px 16px",
-                  marginTop: "32px",
+                  // marginTop: "32px",
                   fontSize: "21px",
                   animation: "pulse 2s infinite",
                 }}
@@ -160,46 +160,59 @@ export const WrapInteraction = () => {
             )}
             {address && (
               <div
+                className={"grid grid-cols-1 sm:text-md text-center w-full"}
                 style={{
-                  display: "flex",
+                  // display: "flex",
                   justifyContent: "center",
                   border: "4px solid",
                   borderRadius: "10px",
-                  borderColor: "#004EE5", // fMULTI BLUE
+                  borderColor: "#005AFF", // BLUE
                   padding: "8px 4px",
-                  marginTop: "32px",
-                  fontSize: "21px",
                   fontWeight: "bold",
                 }}
-                className={""}
               >
-                {`${balance ? formatNumber(Number(formattedBalance.balance), false, true) : "0.0"} FMULTI`}
+                <div>
+                  {`${
+                    !balance || Number(formattedBalance.balance) == 0
+                      ? "0"
+                      : balance && Number(formattedBalance.balance) > 0.01
+                      ? formatNumber(Number(formattedBalance.balance), false, true)
+                      : "< 0.01"
+                  }`}
+                </div>
+                <div> {`FMULTI`} </div>
               </div>
             )}
             {/* [√] FMULTI.approve(LZ_FMULTI, balance) */}
-            {address && <ApproveButton balance={JSBI.BigInt(Number(balance)).toString()} />}
+            {address && Number(balance) > 0 && <ApproveButton balance={JSBI.BigInt(Number(balance)).toString()} />}
             {address && (
               <div
+                className={"grid grid-cols-1 sm:text-md text-center w-full"}
                 style={{
-                  display: "flex",
                   justifyContent: "center",
                   border: "4px solid",
                   borderRadius: "10px",
-                  borderColor: "#004EE5", // fMULTI BLUE
+                  borderColor: "#005AFF", // BLUE
                   padding: "8px 4px",
-                  marginTop: "32px",
-                  fontSize: "21px",
                   fontWeight: "bold",
                 }}
-                className={""}
               >
-                {`${balance ? formatNumber(convertedBalance, false, true) : "0.0"} lz-fMULTI`}
+                <div>
+                  {`${
+                    !balance || Number(formattedBalance.balance) == 0
+                      ? "0"
+                      : balance && Number(formattedBalance.balance) > 0.01
+                      ? formatNumber(convertedBalance, false, true)
+                      : "< 0.01"
+                  }`}
+                </div>
+                <div> {`lz-fMULTI`} </div>
               </div>
             )}
-            {address && <DepositButton balance={JSBI.BigInt(Number(balance)).toString()} />}
+            {address && Number(balance) > 0 && <DepositButton balance={JSBI.BigInt(Number(balance)).toString()} />}
           </div>
         </div>
-        <div className="mt-4 flex justify-center gap-2 items-start">
+        <div className="mt-12 flex justify-center gap-2 items-start">
           {/* <span className="text-sm leading-tight">Conversion Rate:</span> */}
           <div
             className="badge badge-warning"
@@ -207,16 +220,17 @@ export const WrapInteraction = () => {
               display: "flex",
               position: "absolute",
               justifyContent: "center",
-              border: "4px solid",
+              border: "2px solid",
               borderRadius: "10px",
-              borderColor: "#004EE5", // fMULTI BLUE
+              borderColor: "#ADADAD", // GREY
+              backgroundColor: "#005AFF", // BLUE
               fontSize: "18px",
               paddingBottom: "16px",
               paddingTop: "16px",
+              color: "#FFFFFF",
             }}
             onClick={() => toggleConversionRate()}
           >
-            {" "}
             {conversionRate}
           </div>
         </div>

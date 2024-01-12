@@ -13,7 +13,7 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { Address, BlockieAvatar } from "~~/components/scaffold-eth";
+import { Address } from "~~/components/scaffold-eth";
 // balance
 import { useAutoConnect, useNetworkColor } from "~~/hooks/scaffold-eth";
 import { getBlockExplorerAddressLink, getTargetNetwork } from "~~/utils/scaffold-eth";
@@ -42,8 +42,12 @@ export const RainbowConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <button className="btn btn-primary btn-sm" onClick={openConnectModal} type="button">
-                    Connect Wallet
+                  <button
+                    className="text-[0.9em] sm:text-[1.0em] btn btn-primary btn-sm"
+                    onClick={openConnectModal}
+                    type="button"
+                  >
+                    {`Connect Wallet`}
                   </button>
                 );
               }
@@ -109,8 +113,8 @@ export const RainbowConnectButton = () => {
                       tabIndex={0}
                       className="btn btn-secondary btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 !h-auto"
                     >
-                      <BlockieAvatar address={account.address} size={24} ensImage={account.ensAvatar} />
-                      <span className="ml-2 mr-1">{account.displayName}</span>
+                      {/* <BlockieAvatar address={account.address} size={24} ensImage={account.ensAvatar} /> */}
+                      <span className="ml-6 mr-1">{account.displayName}</span>
                       <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
                     </label>
                     <ul

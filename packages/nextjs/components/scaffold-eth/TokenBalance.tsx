@@ -1,3 +1,4 @@
+import { formatNumber } from "~~/functions/formatNumber";
 import { useTokenBalance } from "~~/hooks/scaffold-eth";
 
 type TBalanceProps = {
@@ -38,7 +39,11 @@ export const TokenBalance = ({ account, token, className = "", symbol }: TBalanc
       onClick={onToggleBalance}
     >
       <div className="w-full flex items-center justify-center">
-        <span className="text-[0.8em] font-bold ml-1">{`${balance.toFixed(2)} ${symbol}`}</span>
+        <span className="text-[0.9em] sm:text-[1.0em] font-bold ml-1">{`${formatNumber(
+          balance,
+          false,
+          true,
+        )} ${symbol}`}</span>
       </div>
     </button>
   );
