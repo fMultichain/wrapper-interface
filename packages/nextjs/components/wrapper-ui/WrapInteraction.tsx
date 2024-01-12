@@ -1,4 +1,4 @@
-// import { useState } from "react"
+import { useState } from "react";
 import { CopyIcon } from "./assets/CopyIcon";
 import { DiamondIcon } from "./assets/DiamondIcon";
 import { HareIcon } from "./assets/HareIcon";
@@ -24,129 +24,109 @@ const ABI_FMULTI = [
   },
 ];
 
-// const ABI_LZ_FMULTI = [
-//   { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "deposit", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }
-// ]
+const ABI_LZ_FMULTI = [
+  {
+    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    name: "deposit",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
 
 type TBalanceProps = {
   balance: string;
   className?: string;
 };
 
-export const ApproveButton = ({ balance, className = "" }: TBalanceProps) => {
-  const { write } = useContractWrite({
-    address: FMULTI_ADDRESS,
-    // @ts-ignore
-    abi: ABI_FMULTI,
-    // inputs: [{
-    //     reciever: address, // state: false,
-    // }],
-    // outputs: [],
-    functionName: "approve", // setPaused
-  });
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        // width: '100%',
-        // fontColor: '#FFFFFF',
-        border: "4px solid",
-        borderRadius: "10px",
-        borderColor: "#004EE5", // fMULTI BLUE
-        padding: "8px 64px",
-        marginTop: "32px",
-        fontSize: "24px",
-        // hoveredBorder: '2px solid',
-      }}
-      onClick={() =>
-        write({
-          args: [LZFMULTI_ADDRESS, balance],
-          // value: "1000000000000000000" // 1 ETH
-        })
-      }
-      className={className}
-    >
-      Approve
-    </div>
-  );
-};
-
-// export const WrapButton = ({ balance, className = "" }: TBalanceProps) => {
-//   const { write } = useContractWrite({
-//     address: FMULTI_ADDRESS,
-//     // @ts-ignore
-//     abi: ABI_FMULTI,
-//     // inputs: [{
-//     //     reciever: address, // state: false,
-//     // }],
-//     // outputs: [],
-//     functionName: 'approve', // setPaused
-//   })
-
-//   return (
-//     <div
-//       style={{
-//         display: 'flex',
-//         // width: '100%',
-//         // fontColor: '#FFFFFF',
-//         border: '4px solid',
-//         borderRadius: '10px',
-//         borderColor: '#004EE5', // fMULTI BLUE
-//         padding: '8px 64px',
-//         marginTop: '32px',
-//         fontSize: '24px',
-//         // hoveredBorder: '2px solid',
-//       }}
-//       onClick={() => write({
-//         args: [LZFMULTI_ADDRESS, balance],
-//         // value: "1000000000000000000" // 1 ETH
-//       })}
-//     >
-//       Approve
-//     </div>
-//   )
-// }
-
 export const WrapInteraction = () => {
-  // const [depositAmount, setDepositAmount] = useState("")
-  // const { address } = useAccount()
-  // const { data } = useBalance({ address })
-  // const balance = Number(data?.formatted)
+  // const [isApproved, setApproved] = useState(false)
+  const [conversionRate, setConversionRate] = useState("lz-fMULTI = 20,000,000 FMULTI");
   const { address } = useAccount();
   const formattedBalance = useTokenBalance(
     address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
     FMULTI_ADDRESS,
   );
 
+  const toggleConversionRate = () => {
+    conversionRate == "1 lz-fMULTI = 20,000,000 FMULTI"
+      ? setConversionRate("0.00000005 lz-fMULTI = 1 FMULTI")
+      : setConversionRate("1 lz-fMULTI = 20,000,000 FMULTI");
+  };
+
   const balance = Number(formattedBalance.balance) * 1e18;
+  const convertedBalance = Number(formattedBalance.balance) * 0.00000005;
 
-  // // let FMULTI = await new web3.eth.Contract(ABI_FMULTI, FMULTI_ADDRESS);
-  // // let LZFMULTI = await new web3.eth.Contract(ABI_LZ_FMULTI, LZFMULTI_ADDRESS);
-  // // const insufficientBalance = balance < 1
+  const ApproveButton = ({ balance, className = "" }: TBalanceProps) => {
+    const { write } = useContractWrite({
+      address: FMULTI_ADDRESS,
+      abi: ABI_FMULTI,
+      functionName: "approve",
+    });
 
-  //   // console.log(w,h)
-  //   const { write } = useContractWrite({
-  //     // @ts-ignore
-  //     address: rareAddress(),
-  //     // @ts-ignore
-  //     abi: ABI_FMULTI,
-  //     // inputs: [{
-  //     //     reciever: address, // state: false,
-  //     // }],
-  //     // outputs: [],
-  //     functionName: 'approve', // setPaused
-  //   })
+    const handleApproval = () => {
+      write({
+        args: [LZFMULTI_ADDRESS, balance],
+      });
+      // setApproved(true)
+      // console.log('approved: %s', isApproved)
+    };
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          border: "4px solid",
+          borderRadius: "10px",
+          borderColor: "#004EE5", // fMULTI BLUE
+          padding: "8px 64px",
+          marginTop: "32px",
+          fontSize: "21px",
+          fontWeight: "bold",
+          backgroundColor: "#004EE5",
+          color: "#FFFFFF",
+        }}
+        onClick={() => handleApproval()}
+        className={className}
+      >
+        Approve
+      </div>
+    );
+  };
 
-  // const { writeAsync, isLoading } = useScaffoldContractWrite({
-  //   contractName: "YourContract",
-  //   functionName: "deposit", // todo
-  //   args: [depositAmount],
-  //   value: "0.01", // todo
-  //   onBlockConfirmation: txnReceipt => {
-  //     console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-  //   },
-  // });
+  const DepositButton = ({ balance, className = "" }: TBalanceProps) => {
+    const { write } = useContractWrite({
+      address: LZFMULTI_ADDRESS,
+      abi: ABI_LZ_FMULTI,
+      functionName: "deposit",
+    });
+
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          border: "4px solid",
+          borderRadius: "10px",
+          borderColor: "#004EE5", // fMULTI BLUE
+          padding: "8px 64px",
+          marginTop: "32px",
+          fontSize: "21px",
+          fontWeight: "bold",
+          backgroundColor: "#004EE5",
+          color: "#FFFFFF",
+        }}
+        onClick={() =>
+          write({
+            args: [balance],
+          })
+        }
+        className={className}
+      >
+        Upgrade
+      </div>
+    );
+  };
 
   return (
     <div className="flex bg-base-300 relative pb-10">
@@ -155,13 +135,8 @@ export const WrapInteraction = () => {
       <HareIcon className="absolute right-0 bottom-24" />
       <div className="flex flex-col w-full mx-5 sm:mx-8 2xl:mx-20">
         <div className="flex flex-col mt-6 px-7 py-8 bg-base-200 opacity-80 rounded-2xl shadow-lg border-2 border-primary">
-          {/* <span 
-            className="text-center text-2xl sm:text-6xl text-black"
-          >
-            {`Upgrade to lz-fMULTI`}
-          </span> */}
-          {/* <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-5"> */}
           <div
+            className={address ? `grid grid-cols-2 gap-4` : `mb-8`}
             style={{
               justifyContent: "center",
             }}
@@ -171,55 +146,78 @@ export const WrapInteraction = () => {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  // width: '100%',
-                  // fontColor: '#FFFFFF',
                   border: "4px solid",
                   borderRadius: "10px",
                   borderColor: "#FF0000", // fMULTI BLUE
                   padding: "2px 16px",
                   marginTop: "32px",
-                  fontSize: "24px",
+                  fontSize: "21px",
                   animation: "pulse 2s infinite",
-                  // hoveredBorder: '2px solid',
                 }}
               >
-                {`Wallet Disconnected`}
+                {`Disconnected`}
               </div>
             )}
             {address && (
               <div
                 style={{
                   display: "flex",
-                  // width: '100%',
-                  // fontColor: '#FFFFFF',
+                  justifyContent: "center",
                   border: "4px solid",
                   borderRadius: "10px",
                   borderColor: "#004EE5", // fMULTI BLUE
-                  padding: "8px 64px",
+                  padding: "8px 4px",
                   marginTop: "32px",
-                  fontSize: "24px",
-                  // hoveredBorder: '2px solid',
+                  fontSize: "21px",
+                  fontWeight: "bold",
                 }}
                 className={""}
               >
-                {`${balance ? formatNumber(balance, false, true) : "0.0"} FMULTI`}
+                {`${balance ? formatNumber(Number(formattedBalance.balance), false, true) : "0.0"} FMULTI`}
               </div>
             )}
             {/* [√] FMULTI.approve(LZ_FMULTI, balance) */}
             {address && <ApproveButton balance={JSBI.BigInt(Number(balance)).toString()} />}
-            {/* {isLoading ? (
-                    <span className="loading loading-spinner loading-sm"></span>
-                  ) : (
-                    <>
-                      Upgrade <ArrowSmallRightIcon className="w-3 h-3 mt-0.5" />
-                    </>
-                  )} */}
-            {/* </button> */}
+            {address && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  border: "4px solid",
+                  borderRadius: "10px",
+                  borderColor: "#004EE5", // fMULTI BLUE
+                  padding: "8px 4px",
+                  marginTop: "32px",
+                  fontSize: "21px",
+                  fontWeight: "bold",
+                }}
+                className={""}
+              >
+                {`${balance ? formatNumber(convertedBalance, false, true) : "0.0"} lz-fMULTI`}
+              </div>
+            )}
+            {address && <DepositButton balance={JSBI.BigInt(Number(balance)).toString()} />}
           </div>
-
-          <div className="mt-4 flex gap-2 items-start">
-            <span className="text-sm leading-tight">Conversion Rate:</span>
-            <div className="badge badge-warning">lz-fMULTI = 20,000,000 FMULTI (?)</div>
+        </div>
+        <div className="mt-4 flex justify-center gap-2 items-start">
+          {/* <span className="text-sm leading-tight">Conversion Rate:</span> */}
+          <div
+            className="badge badge-warning"
+            style={{
+              display: "flex",
+              position: "absolute",
+              justifyContent: "center",
+              border: "4px solid",
+              borderRadius: "10px",
+              borderColor: "#004EE5", // fMULTI BLUE
+              fontSize: "18px",
+              paddingBottom: "16px",
+              paddingTop: "16px",
+            }}
+            onClick={() => toggleConversionRate()}
+          >
+            {" "}
+            {conversionRate}
           </div>
         </div>
       </div>
