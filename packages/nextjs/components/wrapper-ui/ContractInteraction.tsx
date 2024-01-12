@@ -47,7 +47,7 @@ export const ContractInteraction = () => {
                     <span className="loading loading-spinner loading-sm"></span>
                   ) : (
                     <>
-                      Send <ArrowSmallRightIcon className="w-3 h-3 mt-0.5" />
+                      Upgrade <ArrowSmallRightIcon className="w-3 h-3 mt-0.5" />
                     </>
                   )}
                 </button>

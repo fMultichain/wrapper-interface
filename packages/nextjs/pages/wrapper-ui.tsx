@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
-// import { ContractData } from "~~/components/wrapper-ui/ContractData";
-import { ContractInteraction } from "~~/components/wrapper-ui/ContractInteraction";
+// import { ContractData } from "~~/components/wrapper-ui/ContractData"
+import { WrapInteraction } from "~~/components/wrapper-ui/WrapInteraction";
 
 const WrapperUI: NextPage = () => {
   return (
@@ -12,7 +12,7 @@ const WrapperUI: NextPage = () => {
         <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap" rel="stylesheet" />
       </MetaHeader>
       <div className="grid flex-grow" data-theme="exampleUi">
-        <ContractInteraction />
+        <WrapInteraction />
         {/* <ContractData /> */}
       </div>
     </>
