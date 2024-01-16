@@ -13,7 +13,7 @@ import { useGlobalState } from "~~/services/store/store";
 export const Footer = () => {
   const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
   return (
-    <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0">
+    <div className="sm:min-h-0 py-5 px-1 mb-11 lg:mb-0">
       <div>
         <div className="fixed flex justify-between items-center w-full z-10 p-4 bottom-0 left-0">
           <div className="flex space-x-2 pointer-events-auto">
@@ -31,7 +31,11 @@ export const Footer = () => {
             //   justifyContent: 'center',
             // }}
           >
-            <div className={"flex justify-center p-2 border rounded-2xl"}>
+            <div
+              className={
+                "flex text-[#005AFF] sm:text-[#FFFFFF] justify-center p-2 border-2 border-[#005AFF] sm:border-[#FFFFFF] rounded-2xl"
+              }
+            >
               <Link
                 href="https://fmulti.gitbook.io/fmulti" // todo
                 target="_blank"
@@ -40,17 +44,29 @@ export const Footer = () => {
                 {`Docs`}
               </Link>
             </div>
-            <div className={"flex justify-center p-2 border rounded-2xl"}>
+            <div
+              className={
+                "flex text-[#005AFF] sm:text-[#FFFFFF] justify-center p-2 border-2 border-[#005AFF] sm:border-[#FFFFFF] rounded-2xl"
+              }
+            >
               <Link href="https://x.com/FMultichain" target="_blank" rel="noopener noreferrer">
                 {`Twitter`}
               </Link>
             </div>
-            <div className={"flex justify-center p-2 border rounded-2xl"}>
+            <div
+              className={
+                "flex text-[#005AFF] sm:text-[#FFFFFF] justify-center p-2 border-2 border-[#005AFF] sm:border-[#FFFFFF] rounded-2xl"
+              }
+            >
               <Link href="https://discord.com" target="_blank" rel="noopener noreferrer">
                 {`Discord`}
               </Link>
             </div>
-            <div className={"flex justify-center p-2 border rounded-2xl"}>
+            <div
+              className={
+                "flex text-[#005AFF] sm:text-[#FFFFFF] justify-center p-2 border-2 border-[#005AFF] sm:border-[#FFFFFF] rounded-2xl"
+              }
+            >
               <Link href="https://t.me/FuckMulti" target="_blank" rel="noopener noreferrer">
                 {`Telegram`}
               </Link>
