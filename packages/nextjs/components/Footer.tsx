@@ -13,7 +13,7 @@ import { useGlobalState } from "~~/services/store/store";
 export const Footer = () => {
   const nativeCurrencyPrice = useGlobalState(state => state.nativeCurrencyPrice);
   return (
-    <div className="sm:min-h-0 py-5 px-1 mb-11 lg:mb-0">
+    <div className="sm:min-h-0 py-12 sm:py-5 px-1 lg:mb-0">
       <div>
         <div className="fixed flex justify-between items-center w-full z-10 p-4 bottom-0 left-0">
           <div className="flex space-x-2 pointer-events-auto">
