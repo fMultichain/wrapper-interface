@@ -8,19 +8,20 @@ module.exports = {
     themes: [
       {
         scaffoldEth: {
-          primary: "#005AFF", // Wallet and Toggle Buttons
-          "primary-content": "#212638",
-          secondary: "#005AFF", // bottom header
-          "secondary-content": "#212638",
-          accent: "#93BBFB",
-          "accent-content": "#212638",
-          neutral: "#212638",
-          "neutral-content": "#ffffff",
-          "base-100": "#ffffff", // header
-          "base-200": "#f4f8ff",
-          "base-300": "#DAE8FF",
-          "base-content": "#212638",
-          info: "#93BBFB",
+          primary: "#212638",
+          "primary-content": "#F9FBFF",
+          // secondary: "#323f61",
+          secondary: "#FFFFFF", // profile bg
+          "secondary-content": "#000000", // profile name
+          accent: "#4969A6",
+          "accent-content": "#F9FBFF",
+          neutral: "#F9FBFF",
+          "neutral-content": "#385183",
+          "base-100": "#005AFF", // header bg
+          "base-200": "#005AFF", // footer bg
+          "base-300": "#212638",
+          "base-content": "#F9FBFF",
+          info: "#385183",
           success: "#34EEB6",
           warning: "#FFCF72",
           error: "#FF8863",
@@ -29,6 +30,7 @@ module.exports = {
 
           ".tooltip": {
             "--tooltip-tail": "6px",
+            "--tooltip-color": "hsl(var(--p))",
           },
         },
       },
