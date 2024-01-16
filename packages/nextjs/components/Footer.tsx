@@ -33,7 +33,7 @@ export const Footer = () => {
           >
             <div className={"flex justify-center p-2 border rounded-2xl"}>
               <Link
-                href="https://t.me/FuckMulti" // todo
+                href="https://fmulti.gitbook.io/fmulti" // todo
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -46,11 +46,7 @@ export const Footer = () => {
               </Link>
             </div>
             <div className={"flex justify-center p-2 border rounded-2xl"}>
-              <Link
-                href="https://discord.gg" // todo
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Link href="https://discord.com" target="_blank" rel="noopener noreferrer">
                 {`Discord`}
               </Link>
             </div>
