@@ -25,7 +25,7 @@ export const Footer = () => {
             )}
           </div>
           <div
-            className="grid grid-cols-4 gap-4"
+            className="grid grid-cols-3 gap-4"
             // style={{
             //   display: 'grid',
             //   justifyContent: 'center',
@@ -49,13 +49,13 @@ export const Footer = () => {
                 {`Twitter`}
               </Link>
             </div>
-            <div
+            {/* <div
               className={"flex text-[#FFFFFF] justify-center p-2 border-2 bg-[#005AFF] border-[#FFFFFF] rounded-2xl"}
             >
               <Link href="https://discord.com" target="_blank" rel="noopener noreferrer">
                 {`Discord`}
               </Link>
-            </div>
+            </div> */}
             <div
               className={"flex text-[#FFFFFF] justify-center p-2 border-2 bg-[#005AFF] border-[#FFFFFF] rounded-2xl"}
             >
