@@ -24,6 +24,18 @@ export const Footer = () => {
               </div>
             )}
           </div>
+          <div
+            className="grid grid-cols-4 gap-4"
+            // style={{
+            //   display: 'grid',
+            //   justifyContent: 'center',
+            // }}
+          >
+            <div className={"flex justify-center p-2 border rounded-2xl"}>{`Docs`}</div>
+            <div className={"flex justify-center p-2 border rounded-2xl"}>{`Twitter`}</div>
+            <div className={"flex justify-center p-2 border rounded-2xl"}>{`Discord`}</div>
+            <div className={"flex justify-center p-2 border rounded-2xl"}>{`Telegram`}</div>
+          </div>
           {/* <SwitchTheme className="pointer-events-auto" /> */}
         </div>
       </div>

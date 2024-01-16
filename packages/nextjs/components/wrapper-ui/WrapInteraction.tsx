@@ -78,7 +78,6 @@ export const WrapInteraction = () => {
           justifyContent: "center",
           border: "4px solid",
           borderRadius: "10px",
-          borderColor: "#ADADAD", // GREY
           padding: "8px 6px",
           paddingTop: "16px",
           fontSize: "21px",
@@ -108,7 +107,6 @@ export const WrapInteraction = () => {
           justifyContent: "center",
           border: "4px solid",
           borderRadius: "10px",
-          borderColor: "#ADADAD", // GREY
           padding: "8px 4px",
           paddingTop: "16px",
           fontSize: "21px",
