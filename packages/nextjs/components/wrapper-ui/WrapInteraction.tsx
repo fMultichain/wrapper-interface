@@ -40,7 +40,7 @@ type TBalanceProps = {
 };
 
 export const WrapInteraction = () => {
-  // const [isApproved, setApproved] = useState(false)
+  const [isApproved, setApproved] = useState(false);
   const [conversionRate, setConversionRate] = useState("lz-fMULTI = 20,000,000 FMULTI");
   const { address } = useAccount();
   const formattedBalance = useTokenBalance(
@@ -68,7 +68,7 @@ export const WrapInteraction = () => {
       write({
         args: [LZFMULTI_ADDRESS, balance],
       });
-      // setApproved(true)
+      setApproved(true);
       // console.log('approved: %s', isApproved)
     };
     return (
@@ -182,8 +182,10 @@ export const WrapInteraction = () => {
               </div>
             )}
             {/* [√] FMULTI.approve(LZ_FMULTI, balance) */}
-            {address && Number(balance) > 0 && <ApproveButton balance={JSBI.BigInt(Number(balance)).toString()} />}
-            {address && (
+            {address && !isApproved && Number(balance) > 0 && (
+              <ApproveButton balance={JSBI.BigInt(Number(balance)).toString()} />
+            )}
+            {address && !isApproved && (
               <div
                 className={"grid grid-cols-1 sm:text-md text-center w-full"}
                 style={{
