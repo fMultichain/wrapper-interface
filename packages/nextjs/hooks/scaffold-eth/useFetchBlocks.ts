@@ -4,7 +4,7 @@ import { usePublicClient } from "wagmi";
 import { hardhat } from "wagmi/chains";
 import { decodeTransactionData } from "~~/utils/scaffold-eth";
 
-const BLOCKS_PER_PAGE = 20;
+const BLOCKS_PER_PAGE = 10;
 
 export const useFetchBlocks = () => {
   const client = usePublicClient({ chainId: hardhat.id });
