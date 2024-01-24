@@ -48,13 +48,13 @@ const TransactionPage: NextPage = () => {
             <tbody>
               <tr>
                 <td>
-                  <strong>Transaction Hash:</strong>
+                  <strong>Tx Hash:</strong>
                 </td>
                 <td>{transaction.hash}</td>
               </tr>
               <tr>
                 <td>
-                  <strong>Block Number:</strong>
+                  <strong>Block:</strong>
                 </td>
                 <td>{Number(transaction.blockNumber)}</td>
               </tr>
@@ -91,7 +91,7 @@ const TransactionPage: NextPage = () => {
               </tr>
               <tr>
                 <td>
-                  <strong>Function called:</strong>
+                  <strong>Function:</strong>
                 </td>
                 <td>
                   <div className="w-full md:max-w-[600px] lg:max-w-[800px] overflow-x-auto whitespace-nowrap">

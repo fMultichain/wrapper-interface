@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
+import { useEffectOnce } from "usehooks-ts";
 import { Block, Transaction, TransactionReceipt } from "viem";
 import { usePublicClient } from "wagmi";
-import { hardhat } from "wagmi/chains";
+// import { hardhat } from "wagmi/chains";
 import { decodeTransactionData } from "~~/utils/scaffold-eth";
 
 const BLOCKS_PER_PAGE = 10;
 
 export const useFetchBlocks = () => {
-  const client = usePublicClient({ chainId: hardhat.id });
+  // const client = usePublicClient({ chainId: hardhat.id });
+  const client = usePublicClient({ chainId: 250 });
 
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [transactionReceipts, setTransactionReceipts] = useState<{
@@ -24,6 +26,7 @@ export const useFetchBlocks = () => {
 
     try {
       const blockNumber = await client.getBlockNumber();
+      // console.log('block number [0]: %s', blockNumber)
       setTotalBlocks(blockNumber);
 
       const startingBlock = blockNumber - BigInt(currentPage * BLOCKS_PER_PAGE);
@@ -69,10 +72,12 @@ export const useFetchBlocks = () => {
   }, [client, currentPage]);
 
   useEffect(() => {
+    // console.log('fetching blocks [1]...')
     fetchBlocks();
   }, [fetchBlocks]);
 
-  useEffect(() => {
+  useEffectOnce(() => {
+    console.log("handling new blocks [0]...");
     const handleNewBlock = async (newBlock: Block) => {
       try {
         if (!blocks.some(block => block.number === newBlock.number)) {
@@ -105,7 +110,8 @@ export const useFetchBlocks = () => {
     };
 
     return client.watchBlocks({ onBlock: handleNewBlock, includeTransactions: true });
-  }, [blocks, client, currentPage]);
+  });
+  // }, [blocks, client, currentPage])
 
   return {
     blocks,
