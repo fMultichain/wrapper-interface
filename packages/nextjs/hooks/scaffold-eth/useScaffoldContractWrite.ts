@@ -34,7 +34,7 @@ export const useScaffoldContractWrite = <
   const writeTx = useTransactor();
   const [isMining, setIsMining] = useState(false);
   const configuredNetwork = getTargetNetwork();
-
+  // creates: wagmiContractWrite
   const wagmiContractWrite = useContractWrite({
     chainId: configuredNetwork.id,
     address: deployedContractData?.address,
