@@ -4,54 +4,29 @@ import { DiamondIcon } from "./assets/DiamondIcon";
 import { HareIcon } from "./assets/HareIcon";
 import { JSBI } from "@sushiswap/core-sdk";
 import { useAccount, useContractWrite } from "wagmi";
+import { ABI_LZFMULTI, ChainId, ENDPOINT_ID, LZFMULTI_ADDRESS } from "~~/constants";
 import { formatNumber } from "~~/functions/formatNumber";
-// import { ArrowSmallRightIcon } from "@heroicons/react/24/outline"
 import { useTokenBalance } from "~~/hooks/scaffold-eth";
-
-const LZFMULTI_ADDRESS = "0xF386eB6780a1e875616b5751794f909095283860";
-const FMULTI_ADDRESS = "0x6CEbb8cD66Fca7E6aca65841Ae3A04B7884F4de8";
-
-const ABI_FMULTI = [
-  {
-    inputs: [
-      { internalType: "address", name: "_spender", type: "address" },
-      { internalType: "uint256", name: "_value", type: "uint256" },
-    ],
-    name: "approve",
-    outputs: [{ internalType: "bool", name: "success", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-];
-
-const ABI_LZ_FMULTI = [
-  {
-    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
-    name: "deposit",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-];
 
 type TBalanceProps = {
   balance: string;
   className?: string;
 };
 
-export const WrapInteraction = () => {
+export const BridgeInteraction = () => {
   const [isApproved, setApproved] = useState(false);
-  const [conversionRate, setConversionRate] = useState("lz-fMULTI = 20,000,000 FMULTI");
+  // const [toChain, setToChain] = useState(ChainId.ETHEREUM);
+  const [endpointId, setEndpointId] = useState(ENDPOINT_ID[ChainId.ETHEREUM]);
   const { address } = useAccount();
   const formattedBalance = useTokenBalance(
     address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-    FMULTI_ADDRESS,
+    LZFMULTI_ADDRESS[ChainId.FANTOM],
   );
 
-  const toggleConversionRate = () => {
-    conversionRate == "1 lz-fMULTI = 20,000,000 FMULTI"
-      ? setConversionRate("0.00000005 lz-fMULTI = 1 FMULTI")
-      : setConversionRate("1 lz-fMULTI = 20,000,000 FMULTI");
+  const toggleendpointId = () => {
+    endpointId == "1 lz-fMULTI = 20,000,000 FMULTI"
+      ? setEndpointId("0.00000005 lz-fMULTI = 1 FMULTI")
+      : setEndpointId("1 lz-fMULTI = 20,000,000 FMULTI");
   };
 
   const balance = Number(formattedBalance.balance) * 1e18;
@@ -59,14 +34,14 @@ export const WrapInteraction = () => {
 
   const ApproveButton = ({ balance, className = "" }: TBalanceProps) => {
     const { write } = useContractWrite({
-      address: FMULTI_ADDRESS,
-      abi: ABI_FMULTI,
+      address: LZFMULTI_ADDRESS[ChainId.FANTOM],
+      abi: ABI_LZFMULTI,
       functionName: "approve",
     });
 
     const handleApproval = () => {
       write({
-        args: [LZFMULTI_ADDRESS, balance],
+        args: [LZFMULTI_ADDRESS[ChainId.FANTOM], balance],
       });
       setApproved(true);
       // console.log('approved: %s', isApproved)
@@ -95,8 +70,8 @@ export const WrapInteraction = () => {
 
   const DepositButton = ({ balance, className = "" }: TBalanceProps) => {
     const { write } = useContractWrite({
-      address: LZFMULTI_ADDRESS,
-      abi: ABI_LZ_FMULTI,
+      address: LZFMULTI_ADDRESS[ChainId.FANTOM],
+      abi: ABI_LZFMULTI,
       functionName: "deposit",
     });
 
@@ -229,9 +204,9 @@ export const WrapInteraction = () => {
               paddingTop: "16px",
               color: "#FFFFFF",
             }}
-            onClick={() => toggleConversionRate()}
+            onClick={() => toggleendpointId()}
           >
-            {conversionRate}
+            {endpointId}
           </div>
         </div>
       </div>
