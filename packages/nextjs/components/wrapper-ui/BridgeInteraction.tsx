@@ -4,7 +4,8 @@ import { DiamondIcon } from "./assets/DiamondIcon";
 import { HareIcon } from "./assets/HareIcon";
 import { JSBI } from "@sushiswap/core-sdk";
 import { useAccount, useContractWrite } from "wagmi";
-import { ABI_LZFMULTI, ChainId, ENDPOINT_ID, LZFMULTI_ADDRESS } from "~~/constants";
+import { ABI_LZFMULTI, ChainId, LZFMULTI_ADDRESS } from "~~/constants";
+// ENDPOINT_ID
 import { formatNumber } from "~~/functions/formatNumber";
 import { useTokenBalance } from "~~/hooks/scaffold-eth";
 
@@ -13,24 +14,27 @@ type TBalanceProps = {
   className?: string;
 };
 
+const ChainSelector = () => {
+  return <div>{`Select Chain`}</div>;
+};
+
 export const BridgeInteraction = () => {
   const [isApproved, setApproved] = useState(false);
   // const [toChain, setToChain] = useState(ChainId.ETHEREUM);
-  const [endpointId, setEndpointId] = useState(ENDPOINT_ID[ChainId.ETHEREUM]);
+  // const [endpointId, setEndpointId] = useState(ENDPOINT_ID[ChainId.ETHEREUM]);
   const { address } = useAccount();
   const formattedBalance = useTokenBalance(
     address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // defaults: Vitalik.eth
     LZFMULTI_ADDRESS[ChainId.FANTOM],
   );
 
-  const toggleEndpointId = () => {
-    endpointId == "1 lz-fMULTI = 20,000,000 FMULTI"
-      ? setEndpointId("0.00000005 lz-fMULTI = 1 FMULTI")
-      : setEndpointId("1 lz-fMULTI = 20,000,000 FMULTI");
-  };
+  // const toggleEndpointId = () => {
+  //   endpointId == "1 lz-fMULTI = 20,000,000 FMULTI"
+  //     ? setEndpointId("0.00000005 lz-fMULTI = 1 FMULTI")
+  //     : setEndpointId("1 lz-fMULTI = 20,000,000 FMULTI");
+  // };
 
   const balance = Number(formattedBalance.balance) * 1e18;
-  const convertedBalance = Number(formattedBalance.balance) * 0.00000005;
 
   const ApproveButton = ({ balance, className = "" }: TBalanceProps) => {
     const { write } = useContractWrite({
@@ -68,7 +72,9 @@ export const BridgeInteraction = () => {
     );
   };
 
-  const DepositButton = ({ balance, className = "" }: TBalanceProps) => {
+  // TODO: invalid
+  const BridgeButton = ({ balance, className = "" }: TBalanceProps) => {
+    // TODO: update this to use the new traverseChains function.
     const { write } = useContractWrite({
       address: LZFMULTI_ADDRESS[ChainId.FANTOM],
       abi: ABI_LZFMULTI,
@@ -114,6 +120,7 @@ export const BridgeInteraction = () => {
               justifyContent: "center",
             }}
           >
+            {/* [√] DISCONNECTED : SHOW DISCONNECTED */}
             {!address && (
               <div
                 style={{
@@ -131,6 +138,7 @@ export const BridgeInteraction = () => {
                 {`Disconnected`}
               </div>
             )}
+            {/* [√] CONNECTED : SHOW BALANCE */}
             {address && (
               <div
                 className={"grid grid-cols-1 sm:text-md text-center w-full"}
@@ -153,14 +161,15 @@ export const BridgeInteraction = () => {
                       : "< 0.01"
                   }`}
                 </div>
-                <div> {`FMULTI`} </div>
+                <div> {`lz-fMULTI`} </div>
               </div>
             )}
-            {/* [√] FMULTI.approve(LZ_FMULTI, balance) */}
+            {/* [TODO] LZ_FMULTI.approve(CONTRACT, balance) */}
             {address && !isApproved && Number(balance) > 0 && (
               <ApproveButton balance={JSBI.BigInt(Number(balance)).toString()} />
             )}
-            {address && !isApproved && (
+            {/* [WIP] Shows: Chain Selector */}
+            {address && (
               <div
                 className={"grid grid-cols-1 sm:text-md text-center w-full"}
                 style={{
@@ -172,23 +181,13 @@ export const BridgeInteraction = () => {
                   fontWeight: "bold",
                 }}
               >
-                <div>
-                  {`${
-                    !balance || Number(formattedBalance.balance) == 0
-                      ? "0"
-                      : balance && Number(formattedBalance.balance) > 0.01
-                      ? formatNumber(convertedBalance, false, true)
-                      : "< 0.01"
-                  }`}
-                </div>
-                <div> {`lz-fMULTI`} </div>
+                <ChainSelector />
               </div>
             )}
-            {address && Number(balance) > 0 && <DepositButton balance={JSBI.BigInt(Number(balance)).toString()} />}
+            {address && Number(balance) > 0 && <BridgeButton balance={JSBI.BigInt(Number(balance)).toString()} />}
           </div>
         </div>
-        <div className="mt-12 flex justify-center gap-2 items-start">
-          {/* <span className="text-sm leading-tight">Conversion Rate:</span> */}
+        {/* <div className="mt-12 flex justify-center gap-2 items-start">
           <div
             className="badge badge-warning"
             style={{
@@ -208,7 +207,7 @@ export const BridgeInteraction = () => {
           >
             {endpointId}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
