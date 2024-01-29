@@ -21,6 +21,7 @@
     "@sushiswap/core-sdk": "1.0.0-canary.63",
     "@uniswap/sdk-core": "^4.0.1",
     "@uniswap/v2-sdk": "^3.0.1",
+    "ethers": "5.0.5",
     "daisyui": "^3.5.1",
     "next": "^13.1.6",
     "nextjs-progressbar": "^0.0.16",
