@@ -52,7 +52,7 @@ export async function traverseThis(amount: number, toChain: ChainId) {
 
   // the transaction
   const value = await tokenContract.methods
-    .traverseChains(toChain, amount)
+    .traverseChains(ENDPOINT_ID[toChain], amount)
     .send({
       from: selectedAccount,
       gasPrice: estimatedGas,

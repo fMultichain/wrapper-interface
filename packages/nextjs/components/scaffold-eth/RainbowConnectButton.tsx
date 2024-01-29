@@ -101,10 +101,10 @@ export const RainbowConnectButton = () => {
                   >
                     <TokenBalance
                       account={account.address}
-                      // token={"0xF386eB6780a1e875616b5751794f909095283860"}
-                      // symbol={"lz-fMULTI"}
-                      token={"0x6CEbb8cD66Fca7E6aca65841Ae3A04B7884F4de8"}
-                      symbol={"FMULTI"}
+                      token={"0xF386eB6780a1e875616b5751794f909095283860"}
+                      symbol={"lz-fMULTI"}
+                      // token={"0x6CEbb8cD66Fca7E6aca65841Ae3A04B7884F4de8"}
+                      // symbol={"FMULTI"}
                       className="min-h-0 h-auto"
                     />
                   </div>
