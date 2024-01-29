@@ -1,10 +1,10 @@
 import { ChainMap } from "~~/types/ChainMap";
 
-export const ETH_ENDPOINT = "101";
-export const FTM_ENDPOINT = "112";
-export const BASE_ENDPOINT = "184";
-export const ARB_ENDPOINT = "110";
-export const AVAX_ENDPOINT = "106";
+export const ETH_ENDPOINT = 101;
+export const FTM_ENDPOINT = 112;
+export const BASE_ENDPOINT = 184;
+export const ARB_ENDPOINT = 110;
+export const AVAX_ENDPOINT = 106;
 
 export const ENDPOINT_ID: ChainMap = {
   1: ETH_ENDPOINT,

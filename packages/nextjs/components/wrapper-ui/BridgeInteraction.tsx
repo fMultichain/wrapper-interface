@@ -19,11 +19,11 @@ export const BridgeInteraction = () => {
   const [endpointId, setEndpointId] = useState(ENDPOINT_ID[ChainId.ETHEREUM]);
   const { address } = useAccount();
   const formattedBalance = useTokenBalance(
-    address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+    address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // defaults: Vitalik.eth
     LZFMULTI_ADDRESS[ChainId.FANTOM],
   );
 
-  const toggleendpointId = () => {
+  const toggleEndpointId = () => {
     endpointId == "1 lz-fMULTI = 20,000,000 FMULTI"
       ? setEndpointId("0.00000005 lz-fMULTI = 1 FMULTI")
       : setEndpointId("1 lz-fMULTI = 20,000,000 FMULTI");
@@ -204,7 +204,7 @@ export const BridgeInteraction = () => {
               paddingTop: "16px",
               color: "#FFFFFF",
             }}
-            onClick={() => toggleendpointId()}
+            onClick={() => toggleEndpointId()}
           >
             {endpointId}
           </div>

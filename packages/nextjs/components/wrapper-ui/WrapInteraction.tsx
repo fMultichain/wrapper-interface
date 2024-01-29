@@ -19,7 +19,7 @@ export const WrapInteraction = () => {
   const [conversionRate, setConversionRate] = useState("lz-fMULTI = 20,000,000 FMULTI");
   const { address } = useAccount();
   const formattedBalance = useTokenBalance(
-    address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+    address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // defaults: Vitalik.eth
     FMULTI_ADDRESS[ChainId.FANTOM],
   );
 
