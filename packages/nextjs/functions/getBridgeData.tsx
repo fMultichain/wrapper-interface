@@ -32,7 +32,7 @@ export async function getBridgeData(account: any, amount: number, toChain: Chain
   console.log("destination chain: %s", toChain);
 
   // gas required to do transaction on destination chain
-  const number = (await tokenContract.methods.currentLZGas().call()) ?? 250000;
+  const number = 250000; // (await tokenContract.methods.currentLZGas().call()) ?? 250000;
   if (!number) {
     console.log("currentLZGas().call() from", LZFMULTI_ADDRESS[fromChain], "failed");
   }
@@ -43,20 +43,11 @@ export async function getBridgeData(account: any, amount: number, toChain: Chain
   console.log("Adapter Params is", adapterParams);
 
   // this is the payable amount to send
-  const amountToSend = await endpointContract.methods
-    .estimateFees(
-      // '1', '0xF386eB6780a1e875616b5751794f909095283860',
-      // '0x000000000000000000000000fd63bf84471bc55dd9a83fdfa293ccbd27e1f4c80000000000000000000000000000000000000000000031b3c4e48cbbe8000000',
-      //  '0',
-      //  '0x0001000000000000000000000000000000000000000000000000000000000003d090'
-      ENDPOINT_ID[fromChain],
-      LZFMULTI_ADDRESS[fromChain],
-      payload,
-      false,
-      adapterParams,
-    )
+  const _amountToSend = await endpointContract.methods
+    .estimateFees(ENDPOINT_ID[fromChain], LZFMULTI_ADDRESS[fromChain], payload, false, adapterParams)
     .call();
-
+  // @ts-ignore
+  const amountToSend = _amountToSend[0];
   console.log("amountToSend is %s", amountToSend);
 
   if (!amountToSend) {
@@ -71,24 +62,24 @@ export async function getBridgeData(account: any, amount: number, toChain: Chain
     estimatedGas = result;
   });
 
-  //   // the transaction
-  //   const value = await tokenContract.methods
-  //     .traverseChains(ENDPOINT_ID[fromChain], amount)
-  //     .send({
-  //       from: account,
-  //       gasPrice: estimatedGas,
-  //       value: amountToSend ? amountToSend[0] : "0",
-  //     },)
-  //     .on("transactionHash", function (hash: any) {
-  //       console.log(hash);
-  //     });
-  //   if (!value) {
-  //     console.log("traverseChains().send() from", account, "failed");
-  //   }
-
-  const payableAmount = amountToSend ? amountToSend[0] : "0";
+  // the transaction
+  const value = await tokenContract.methods
+    .traverseChains(ENDPOINT_ID[fromChain], amount)
+    .send({
+      from: account,
+      gasPrice: estimatedGas,
+      value: amountToSend ? amountToSend[0] : "0",
+    })
+    .on("transactionHash", function (hash: any) {
+      console.log(hash);
+    });
+  if (!value) {
+    console.log("traverseChains().send() from", account, "failed");
+  }
+  // const _amountToSend = amountToSend ? amountToSend[0] : "0";
+  const payableAmount = amountToSend;
   // const payableAmount = BigInt((Number(_payableAmount) / 1E18).toFixed(0))
   console.log("payableAmount: %s", payableAmount);
 
-  return [estimatedGas, payableAmount];
+  return [estimatedGas, payableAmount, value];
 }
