@@ -21,12 +21,15 @@ type TraverseProps = {
 };
 
 export const BridgeInteraction = () => {
-  // const [isApproved, setApproved] = useState(false);
-  const [toChain, setToChain] = useState(ChainId.AVALANCHE);
   const { address } = useAccount();
 
   const _fromChain = useChainId();
   const fromChain: ChainId = _fromChain as ChainId;
+  const toChains = [ChainId.FANTOM, ChainId.COINBASE, ChainId.ARBITRUM, ChainId.AVALANCHE].filter(
+    (chain: ChainId) => chain !== fromChain,
+  );
+  const [toChain, setToChain] = useState(toChains[0]);
+  const chains = toChains.filter((chain: ChainId) => chain !== toChain);
   const formattedBalance = useTokenBalance(
     address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045", // defaults: Vitalik.eth
     LZFMULTI_ADDRESS[fromChain],
@@ -36,32 +39,68 @@ export const BridgeInteraction = () => {
   const balance = Number(formattedBalance.balance) * 1e18;
 
   const ChainSelector = () => {
-    const toChains = [ChainId.FANTOM, ChainId.COINBASE, ChainId.ARBITRUM, ChainId.AVALANCHE].filter(
-      (chain: ChainId) => chain !== fromChain,
-    );
+    const [showChains, setShowChains] = useState(false);
+    const toggleShow = () => {
+      setShowChains(!showChains);
+    };
     // console.log('toChains: %s', toChains)
     return (
-      <div className="grid grid-cols-3 gap-2">
-        {toChains.map((chain: ChainId) => (
+      <div>
+        <div className={"grid grid-cols-1"}>
+          {/* <div
+        style={{
+          // display: "flex",
+          justifyContent: "center",
+          // border: "4px solid",
+          borderRadius: "10px",
+          padding: "8px 4px",
+          fontWeight: "bold",
+          backgroundColor: "#005AFF", // BLUE
+          color: "#FFFFFF",
+        }}
+      >
+        {`TO`}
+        </div> */}
           <div
-            key={chain}
-            onClick={() => {
-              setToChain(chain);
-            }}
+            onClick={() => toggleShow()}
             style={{
               display: "flex",
               justifyContent: "center",
               border: "4px solid",
               borderRadius: "10px",
-              // padding: "8px 4px",
+              padding: "8px 4px",
               fontWeight: "bold",
               backgroundColor: "#005AFF", // BLUE
               color: "#FFFFFF",
             }}
           >
-            {ChainName[chain]}
+            {`${ChainName[toChain]}`}
           </div>
-        ))}
+        </div>
+        {showChains && (
+          <div onClick={() => toggleShow()} className="grid grid-cols-2 gap-2">
+            {chains.map((chain: ChainId) => (
+              <div
+                key={chain}
+                onClick={() => {
+                  setToChain(chain);
+                }}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  border: "4px solid",
+                  borderRadius: "10px",
+                  // padding: "8px 4px",
+                  fontWeight: "bold",
+                  backgroundColor: "#005AFF", // BLUE
+                  color: "#FFFFFF",
+                }}
+              >
+                {ChainName[chain]}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   };
@@ -112,7 +151,7 @@ export const BridgeInteraction = () => {
         onClick={() => handleTraverse(Number(amount), toChain, fromChain)}
         className={className}
       >
-        {`Traverse`}
+        {`Bridge to ${ChainName[toChain]}`}
       </div>
     );
   };
