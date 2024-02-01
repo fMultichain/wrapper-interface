@@ -18,6 +18,14 @@ export const ABI_LZFMULTI = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  // currentLZGas()
+  {
+    inputs: [],
+    name: "currentLZGas",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
 export const ABI_ERC20 = [
