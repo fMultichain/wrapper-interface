@@ -10,3 +10,10 @@ export enum ChainId {
   ARBITRUM = 42161,
   AVALANCHE = 43114,
 }
+
+export enum ChainName {
+  FTM = 250,
+  BASE = 8453,
+  ARB = 42161,
+  AVAX = 43114,
+}

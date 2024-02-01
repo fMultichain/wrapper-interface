@@ -87,6 +87,8 @@ export async function getBridgeData(account: any, amount: number, toChain: Chain
   //   }
 
   const payableAmount = amountToSend ? amountToSend[0] : "0";
+  // const payableAmount = BigInt((Number(_payableAmount) / 1E18).toFixed(0))
+  console.log("payableAmount: %s", payableAmount);
 
   return [estimatedGas, payableAmount];
 }
