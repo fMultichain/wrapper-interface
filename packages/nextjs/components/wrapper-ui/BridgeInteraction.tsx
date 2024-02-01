@@ -7,6 +7,7 @@ import { useAccount, useContractWrite } from "wagmi";
 import { ABI_LZFMULTI, ChainId, LZFMULTI_ADDRESS } from "~~/constants";
 // ENDPOINT_ID
 import { formatNumber } from "~~/functions/formatNumber";
+import { traverseThis } from "~~/functions/traverseChains";
 import { useTokenBalance } from "~~/hooks/scaffold-eth";
 
 type TBalanceProps = {
@@ -14,13 +15,18 @@ type TBalanceProps = {
   className?: string;
 };
 
-const ChainSelector = () => {
-  return <div>{`Select Chain`}</div>;
+type TraverseProps = {
+  account: any;
+  amount: string | number;
+  toChain: ChainId;
+  fromChain: ChainId;
+  className?: string;
 };
 
 export const BridgeInteraction = () => {
-  const [isApproved, setApproved] = useState(false);
-  // const [toChain, setToChain] = useState(ChainId.ETHEREUM);
+  // const [isApproved, setApproved] = useState(false);
+  const [toChain, setToChain] = useState(ChainId.AVALANCHE);
+  const [fromChain, setFromChain] = useState(ChainId.FANTOM);
   // const [endpointId, setEndpointId] = useState(ENDPOINT_ID[ChainId.ETHEREUM]);
   const { address } = useAccount();
   const formattedBalance = useTokenBalance(
@@ -33,23 +39,71 @@ export const BridgeInteraction = () => {
   //     ? setEndpointId("0.00000005 lz-fMULTI = 1 FMULTI")
   //     : setEndpointId("1 lz-fMULTI = 20,000,000 FMULTI");
   // };
+  const handleSetChains = (fromChain: ChainId, toChain: ChainId) => {
+    setFromChain(fromChain);
+    setToChain(toChain);
+  };
 
   const balance = Number(formattedBalance.balance) * 1e18;
 
-  const ApproveButton = ({ balance, className = "" }: TBalanceProps) => {
-    const { write } = useContractWrite({
-      address: LZFMULTI_ADDRESS[ChainId.FANTOM],
-      abi: ABI_LZFMULTI,
-      functionName: "approve",
-    });
+  // const ApproveButton = ({ balance, className = "" }: TBalanceProps) => {
+  //   const { write } = useContractWrite({
+  //     address: LZFMULTI_ADDRESS[ChainId.FANTOM],
+  //     abi: ABI_LZFMULTI,
+  //     functionName: "approve",
+  //   });
 
-    const handleApproval = () => {
-      write({
-        args: [LZFMULTI_ADDRESS[ChainId.FANTOM], balance],
-      });
-      setApproved(true);
-      // console.log('approved: %s', isApproved)
+  //   const handleApproval = () => {
+  //     write({
+  //       args: [LZFMULTI_ADDRESS[ChainId.FANTOM], balance],
+  //     });
+  //     setApproved(true);
+  //     console.log('approved: %s', isApproved)
+  //   };
+  //   return (
+  //     <div
+  //       style={{
+  //         display: "flex",
+  //         justifyContent: "center",
+  //         border: "4px solid",
+  //         borderRadius: "10px",
+  //         padding: "8px 6px",
+  //         paddingTop: "16px",
+  //         fontSize: "21px",
+  //         fontWeight: "bold",
+  //         backgroundColor: "#005AFF", // BLUE
+  //         color: "#FFFFFF",
+  //       }}
+  //       onClick={() => handleApproval()}
+  //       className={className}
+  //     >
+  //       {`Approve`}
+  //     </div>
+  //   );
+  // };
+
+  const ChainSelector = () => {
+    return (
+      // TODO: fix
+      <div onClick={() => handleSetChains(ChainId.FANTOM, ChainId.AVALANCHE)}>{`Select Chain`}</div>
+    );
+  };
+
+  const TraverseButton = ({ account, amount, className = "" }: TraverseProps) => {
+    // const { write } = useContractWrite({
+    //   address: LZFMULTI_ADDRESS[ChainId.FANTOM],
+    //   abi: ABI_LZFMULTI,
+    //   functionName: "approve",
+    // });
+
+    const handleTraverse = (amount: number, toChain: ChainId, fromChain: ChainId) => {
+      // write({
+      //   args: [LZFMULTI_ADDRESS[ChainId.FANTOM], balance],
+      // });
+      traverseThis(account, Number(amount), toChain, fromChain);
+      console.log("traversing: %s on %s", amount, toChain);
     };
+
     return (
       <div
         style={{
@@ -64,10 +118,10 @@ export const BridgeInteraction = () => {
           backgroundColor: "#005AFF", // BLUE
           color: "#FFFFFF",
         }}
-        onClick={() => handleApproval()}
+        onClick={() => handleTraverse(Number(amount), toChain, fromChain)}
         className={className}
       >
-        {` Approve`}
+        {`Traverse`}
       </div>
     );
   };
@@ -165,9 +219,15 @@ export const BridgeInteraction = () => {
               </div>
             )}
             {/* [TODO] LZ_FMULTI.approve(CONTRACT, balance) */}
-            {address && !isApproved && Number(balance) > 0 && (
+            {/* {address && !isApproved && Number(balance) > 0 && (
               <ApproveButton balance={JSBI.BigInt(Number(balance)).toString()} />
-            )}
+            )} */}
+            <TraverseButton
+              account={address}
+              amount={JSBI.BigInt(balance).toString()}
+              toChain={ChainId.AVALANCHE}
+              fromChain={fromChain}
+            />
             {/* [WIP] Shows: Chain Selector */}
             {address && (
               <div
