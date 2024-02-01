@@ -33,12 +33,12 @@ export const Address = ({ address, disableAddressLink, format, size = "base" }: 
   const [ensAvatar, setEnsAvatar] = useState<string | null>();
   const [addressCopied, setAddressCopied] = useState(false);
 
-  const { data: fetchedEns } = useEnsName({ address, enabled: isAddress(address ?? ""), chainId: 1 });
+  const { data: fetchedEns } = useEnsName({ address, chainId: 1 }); // enabled: isAddress(address ?? "")
   const { data: fetchedEnsAvatar } = useEnsAvatar({
     name: fetchedEns,
-    enabled: Boolean(fetchedEns),
+    // enabled: Boolean(fetchedEns),
     chainId: 1,
-    cacheTime: 30_000,
+    // cacheTime: 30_000,
   });
 
   // We need to apply this pattern to avoid Hydration errors.

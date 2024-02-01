@@ -15,7 +15,6 @@ export function useTokenBalance(account: string, token = "0xF386eB6780a1e875616b
   } = useBalance({
     address: account,
     token, // lz-fMULTI
-    watch: true,
     chainId: getTargetNetwork().id,
   });
 

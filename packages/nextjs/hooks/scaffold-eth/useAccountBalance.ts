@@ -14,7 +14,6 @@ export function useAccountBalance(address?: string) {
     isLoading,
   } = useBalance({
     address,
-    watch: true,
     chainId: getTargetNetwork().id,
   });
 

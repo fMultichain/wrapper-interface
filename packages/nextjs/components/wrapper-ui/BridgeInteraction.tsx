@@ -32,6 +32,12 @@ type TraverseProps = {
   className?: string;
 };
 
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
+
 export const BridgeInteraction = () => {
   const { address } = useAccount();
 
@@ -153,7 +159,7 @@ export const BridgeInteraction = () => {
     // };
 
     const handleTraverseThis = async (account: any, amount: number, toChain: ChainId, fromChain: ChainId) => {
-      const web3 = new Web3(window.ethereum);
+      const web3 = new Web3(window?.ethereum);
 
       // Get account of the connected wallet (refresh)
       // console.log('accounts: %s', accounts[0]);

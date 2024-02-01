@@ -1,13 +1,19 @@
 import { useState } from "react";
+import { config } from "./Config";
 import { CopyIcon } from "./assets/CopyIcon";
 import { DiamondIcon } from "./assets/DiamondIcon";
 import { HareIcon } from "./assets/HareIcon";
 import { JSBI } from "@sushiswap/core-sdk";
-import { useAccount, useContractWrite } from "wagmi";
+// useContractWrite
+// import { sendTransaction } from '@wagmi/core'
+import { writeContract } from "@wagmi/core";
+import { useAccount } from "wagmi";
 import { ABI_ERC20, ABI_LZFMULTI, ChainId, FMULTI_ADDRESS, LZFMULTI_ADDRESS } from "~~/constants";
 import { formatNumber } from "~~/functions/formatNumber";
 // import { ArrowSmallRightIcon } from "@heroicons/react/24/outline"
 import { useTokenBalance } from "~~/hooks/scaffold-eth";
+
+// import { parseEther } from "viem";
 
 type TBalanceProps = {
   balance: string;
@@ -33,14 +39,20 @@ export const WrapInteraction = () => {
   const convertedBalance = Number(formattedBalance.balance) * 0.00000005;
 
   const ApproveButton = ({ balance, className = "" }: TBalanceProps) => {
-    const { write } = useContractWrite({
-      address: FMULTI_ADDRESS[ChainId.FANTOM],
-      abi: ABI_ERC20,
-      functionName: "approve",
-    });
+    // const { write } = useContractWrite({
+    //   address: FMULTI_ADDRESS[ChainId.FANTOM],
+    //   abi: ABI_ERC20,
+    //   functionName: "approve",
+    // });
 
-    const handleApproval = () => {
-      write({
+    const handleApproval = async () => {
+      // write({
+      //   args: [LZFMULTI_ADDRESS[ChainId.FANTOM], balance],
+      // });
+      await writeContract(config, {
+        to: FMULTI_ADDRESS[ChainId.FANTOM],
+        abi: ABI_ERC20,
+        functionName: "approve",
         args: [LZFMULTI_ADDRESS[ChainId.FANTOM], balance],
       });
       setApproved(true);
@@ -69,11 +81,20 @@ export const WrapInteraction = () => {
   };
 
   const DepositButton = ({ balance, className = "" }: TBalanceProps) => {
-    const { write } = useContractWrite({
-      address: LZFMULTI_ADDRESS[ChainId.FANTOM],
-      abi: ABI_LZFMULTI,
-      functionName: "deposit",
-    });
+    // const { write } = useContractWrite({
+    //   address: LZFMULTI_ADDRESS[ChainId.FANTOM],
+    //   abi: ABI_LZFMULTI,
+    //   functionName: "deposit",
+    // });
+    const handleDeposit = async () => {
+      await writeContract(config, {
+        to: LZFMULTI_ADDRESS[ChainId.FANTOM],
+        abi: ABI_LZFMULTI,
+        functionName: "deposit",
+        args: [balance],
+        // value: parseEther('0.01'),
+      });
+    };
 
     return (
       <div
@@ -89,11 +110,7 @@ export const WrapInteraction = () => {
           backgroundColor: "#005AFF", // BLUE
           color: "#FFFFFF",
         }}
-        onClick={() =>
-          write({
-            args: [balance],
-          })
-        }
+        onClick={() => handleDeposit()}
         className={className}
       >
         {`Upgrade`}

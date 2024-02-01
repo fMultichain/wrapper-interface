@@ -3,11 +3,10 @@ import { TokenBalance } from "./TokenBalance";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { QRCodeSVG } from "qrcode.react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { useDisconnect, useSwitchNetwork } from "wagmi";
+import { useDisconnect } from "wagmi";
 import {
   ArrowLeftOnRectangleIcon,
-  ArrowTopRightOnSquareIcon,
-  ArrowsRightLeftIcon,
+  ArrowTopRightOnSquareIcon, // ArrowsRightLeftIcon,
   CheckCircleIcon,
   ChevronDownIcon,
   DocumentDuplicateIcon,
@@ -15,18 +14,18 @@ import {
 } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
 // balance
-import { useAutoConnect, useNetworkColor } from "~~/hooks/scaffold-eth";
+// import { useAutoConnect } from "~~/hooks/scaffold-eth";
 import { getBlockExplorerAddressLink, getTargetNetwork } from "~~/utils/scaffold-eth";
 
 /**
  * Custom Wagmi Connect Button (watch balance + custom design)
  */
 export const RainbowConnectButton = () => {
-  useAutoConnect();
-  const networkColor = useNetworkColor();
+  // useAutoConnect();
+  // const networkColor = useNetworkColor();
   const configuredNetwork = getTargetNetwork();
   const { disconnect } = useDisconnect();
-  const { switchNetwork } = useSwitchNetwork();
+  // const { switchNetwork } = useSwitchNetwork();
   const [addressCopied, setAddressCopied] = useState(false);
 
   return (
@@ -63,7 +62,7 @@ export const RainbowConnectButton = () => {
                       tabIndex={0}
                       className="dropdown-content menu p-2 mt-1 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
                     >
-                      <li>
+                      {/* <li>
                         <button
                           className="btn-sm !rounded-xl flex py-3 gap-3"
                           type="button"
@@ -74,7 +73,7 @@ export const RainbowConnectButton = () => {
                             Switch to <span style={{ color: networkColor }}>{configuredNetwork.name}</span>
                           </span>
                         </button>
-                      </li>
+                      </li> */}
                       <li>
                         <button
                           className="menu-item text-error btn-sm !rounded-xl flex gap-3 py-3"
