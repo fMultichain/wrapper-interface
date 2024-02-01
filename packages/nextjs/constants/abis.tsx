@@ -26,6 +26,17 @@ export const ABI_LZFMULTI = [
     stateMutability: "view",
     type: "function",
   },
+  // traverseChains(_chainId, _amount)
+  {
+    inputs: [
+      { internalType: "uint16", name: "_chainId", type: "uint16" },
+      { internalType: "uint256", name: "_amount", type: "uint256" },
+    ],
+    name: "traverseChains",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
 ];
 
 export const ABI_ERC20 = [

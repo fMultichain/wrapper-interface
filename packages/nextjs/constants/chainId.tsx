@@ -5,9 +5,15 @@
 // export const AVAX = 43114
 
 export enum ChainId {
-  ETHEREUM = 1,
   FANTOM = 250,
   COINBASE = 8453,
   ARBITRUM = 42161,
   AVALANCHE = 43114,
+}
+
+export enum ChainName {
+  FTM = 250,
+  BASE = 8453,
+  ARB = 42161,
+  AVAX = 43114,
 }
