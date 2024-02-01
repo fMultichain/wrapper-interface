@@ -7,7 +7,8 @@ import { useAccount, useContractWrite } from "wagmi";
 import { ABI_LZFMULTI, ChainId, LZFMULTI_ADDRESS } from "~~/constants";
 // ENDPOINT_ID
 import { formatNumber } from "~~/functions/formatNumber";
-import { traverseThis } from "~~/functions/traverseChains";
+import { getBridgeData } from "~~/functions/getBridgeData";
+// import { traverseThis } from "~~/functions/traverseChains";
 import { useTokenBalance } from "~~/hooks/scaffold-eth";
 
 type TBalanceProps = {
@@ -96,11 +97,15 @@ export const BridgeInteraction = () => {
     //   functionName: "approve",
     // });
 
-    const handleTraverse = (amount: number, toChain: ChainId, fromChain: ChainId) => {
+    const handleTraverse = async (amount: number, toChain: ChainId, fromChain: ChainId) => {
       // write({
       //   args: [LZFMULTI_ADDRESS[ChainId.FANTOM], balance],
       // });
-      traverseThis(account, Number(amount), toChain, fromChain);
+      // traverseThis(account, Number(amount), toChain, fromChain);
+      const estimatedGas = await (await getBridgeData(account, Number(amount), toChain, fromChain)).at(0);
+      const payableAmount = await (await getBridgeData(account, Number(amount), toChain, fromChain)).at(1);
+      console.log("estimatedGas: %s, payableAmount: %s", estimatedGas, payableAmount);
+
       console.log("traversing: %s on %s", amount, toChain);
     };
 
@@ -119,6 +124,7 @@ export const BridgeInteraction = () => {
           color: "#FFFFFF",
         }}
         onClick={() => handleTraverse(Number(amount), toChain, fromChain)}
+        // onClick={() => getBridgeData(Number(amount), toChain, fromChain)}
         className={className}
       >
         {`Traverse`}

@@ -6,14 +6,11 @@ import { ABI_LZFMULTI, ChainId, ENDPOINT_ADDRESS, LZFMULTI_ADDRESS, RPC } from "
 // const { address } = useAccount();
 // const account = address
 
-export async function traverseThis(account: any, amount: number, toChain: ChainId, fromChain: ChainId) {
+export async function getBridgeData(account: any, amount: number, toChain: ChainId, fromChain: ChainId) {
   // web3
   // todo: verify provider works.
   // const provider = new Web3(Web3.givenProvider);
-  const provider = new Web3(
-    Web3.givenProvider || new Web3.providers.HttpProvider(RPC[fromChain]),
-    // "http://rpc.ankr.fantom"
-  );
+  const provider = new Web3(Web3.givenProvider || new Web3.providers.HttpProvider(RPC[fromChain]));
   const web3 = new Web3(provider);
 
   // Get account of the connected wallet (refresh)
@@ -63,29 +60,33 @@ export async function traverseThis(account: any, amount: number, toChain: ChainI
   console.log("amountToSend is %s", amountToSend);
 
   if (!amountToSend) {
-    console.log("estimateFees().call() from", ENDPOINT_ADDRESS[toChain], "failed");
+    console.log("estimateFees().call() from", ENDPOINT_ADDRESS[fromChain], "failed");
   }
   console.log("Estimated fees are", amountToSend);
 
-  // current gas estimate
+  //   // current gas estimate
   let estimatedGas;
   await web3.eth.getGasPrice().then((result: any) => {
     console.log("Estimated gas is", web3.utils.fromWei(result, "ether"));
     estimatedGas = result;
   });
 
-  // the transaction
-  const value = await tokenContract.methods
-    .traverseChains(ENDPOINT_ID[fromChain], amount)
-    .send({
-      from: account,
-      gasPrice: estimatedGas,
-      value: amountToSend ? amountToSend[0] : "0",
-    })
-    .on("transactionHash", function (hash: any) {
-      console.log(hash);
-    });
-  if (!value) {
-    console.log("traverseChains().send() from", account, "failed");
-  }
+  //   // the transaction
+  //   const value = await tokenContract.methods
+  //     .traverseChains(ENDPOINT_ID[fromChain], amount)
+  //     .send({
+  //       from: account,
+  //       gasPrice: estimatedGas,
+  //       value: amountToSend ? amountToSend[0] : "0",
+  //     },)
+  //     .on("transactionHash", function (hash: any) {
+  //       console.log(hash);
+  //     });
+  //   if (!value) {
+  //     console.log("traverseChains().send() from", account, "failed");
+  //   }
+
+  const payableAmount = amountToSend ? amountToSend[0] : "0";
+
+  return [estimatedGas, payableAmount];
 }
