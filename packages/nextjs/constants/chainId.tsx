@@ -5,7 +5,6 @@
 // export const AVAX = 43114
 
 export enum ChainId {
-  ETHEREUM = 1,
   FANTOM = 250,
   COINBASE = 8453,
   ARBITRUM = 42161,
