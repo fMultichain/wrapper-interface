@@ -108,6 +108,8 @@ export const BridgeInteraction = () => {
   };
 
   const TraverseButton = ({ account, amount, className = "" }: TraverseProps) => {
+    const { address } = useAccount();
+
     const handleTraverseThis = async (account: any, amount: number, toChain: ChainId, fromChain: ChainId) => {
       const bigAmount = BigInt(amount);
       const version = 1;
@@ -123,15 +125,15 @@ export const BridgeInteraction = () => {
       console.log("Destination: %s", toChain);
 
       // gas required to do transaction on destination chain.
-      const gas = BigInt(250_000); // (await tokenContract.methods.currentLZGas().call()) ?? 250000;
-      if (!gas) {
-        console.log("currentLZGas().call() from", LZFMULTI_ADDRESS[fromChain], "failed");
-      }
+      const gas = 250000; // (await tokenContract.methods.currentLZGas().call()) ?? 250000;
+      // if (!gas) {
+      //   console.log("currentLZGas().call() from", LZFMULTI_ADDRESS[fromChain], "failed");
+      // }
       console.log("Current LZ Gas from contract is", gas);
 
       // this is the adapter settings for L0
-      const adapterParams = encodePacked(["uint16", "uint256"], [version, gas]);
-      console.log("Adapter Params is", adapterParams);
+      const adapterParams = encodePacked(["uint16", "uint256"], [version, BigInt(gas)]);
+      console.log("Adapter Params: %s", adapterParams);
 
       // this is the payable amount to send
       const _gasEstimate = await readContract({
@@ -142,7 +144,7 @@ export const BridgeInteraction = () => {
       });
 
       const gasEstimate_ = _gasEstimate?.toString().split(",") ?? "0";
-      const gasEstimate = Number(gasEstimate_[0]) / 1e18; // BigInt(gasEstimate_[0])
+      const gasEstimate = Number(gasEstimate_[0]); // BigInt(gasEstimate_[0])
 
       console.log("gasEstimate: %s", gasEstimate);
 
@@ -180,8 +182,14 @@ export const BridgeInteraction = () => {
           address: LZFMULTI_ADDRESS[fromChain],
           functionName: "traverseChains",
           args: [ENDPOINT_ID[fromChain], amount],
-          account: account,
-          gas: parseGwei(gasEstimate.toString(), "wei"),
+          // account: account,
+          account: address,
+          // gas: parseGwei('0.000021416', 'wei'),
+          gas: parseGwei("0.000021416", "wei"),
+          value: parseGwei(gasEstimate.toString(), "wei"),
+          // value: ~1.970960549024 FTM (gas estimate)
+          // fee: ~0.00480834 FTM
+          // gas: parseGwei(gas.toString(), "wei"),
           // gasPrice: parseGwei(gasEstimate.toString(), 'wei'),
           // value: parseGwei(gasEstimate.toString(), 'wei'),
           // value: parseEther('0.01'), // amountToSend,
@@ -189,7 +197,6 @@ export const BridgeInteraction = () => {
           // gas: parseGwei('10'), //amountToSend,
           // maxFeePerGas: parseGwei('20'),
           // maxPriorityFeePerGas: parseGwei('2'),
-          // gasPrice: estimatedGas ? estimatedGas : "0",
         });
       } catch (e) {
         // @ts-ignore
@@ -304,27 +311,6 @@ export const BridgeInteraction = () => {
             fromChain={fromChain}
           />
         </div>
-        {/* <div className="mt-12 flex justify-center gap-2 items-start">
-          <div
-            className="badge badge-warning"
-            style={{
-              display: "flex",
-              position: "absolute",
-              justifyContent: "center",
-              border: "2px solid",
-              borderRadius: "10px",
-              borderColor: "#ADADAD", // GREY
-              backgroundColor: "#005AFF", // BLUE
-              fontSize: "18px",
-              paddingBottom: "16px",
-              paddingTop: "16px",
-              color: "#FFFFFF",
-            }}
-            onClick={() => toggleEndpointId()}
-          >
-            {endpointId}
-          </div>
-        </div> */}
       </div>
     </div>
   );
