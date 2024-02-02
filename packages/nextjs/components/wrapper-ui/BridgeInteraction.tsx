@@ -6,8 +6,9 @@ import { JSBI } from "@sushiswap/core-sdk";
 import { readContract, writeContract } from "@wagmi/core";
 // import { getPayload } from "~~/functions/getPayload";
 // import { getParameters } from "~~/functions/getParameters";
-import { encodeAbiParameters, encodePacked } from "viem";
+import { encodeAbiParameters, encodePacked, parseGwei } from "viem";
 import { useAccount, useChainId } from "wagmi";
+// useFeeData
 // import { encodeAbiParameters, encodePacked } from "viem";
 // import { encodeFunctionData } from 'viem'
 // import { parseEther } from 'viem'
@@ -24,6 +25,9 @@ import {
 import { formatNumber } from "~~/functions/formatNumber";
 // import { getBridgeData } from "~~/functions/getBridgeData";
 import { useTokenBalance } from "~~/hooks/scaffold-eth";
+
+// import getGasPrice from "viem";
+// import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
 // import { traverseThis } from "~~/functions/traverseChains";
 // import { ChainMap } from "~~/types/ChainMap";
@@ -105,44 +109,8 @@ export const BridgeInteraction = () => {
 
   const TraverseButton = ({ account, amount, className = "" }: TraverseProps) => {
     const handleTraverseThis = async (account: any, amount: number, toChain: ChainId, fromChain: ChainId) => {
-      // const account = address ? address?.toString() : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-
-      // account;
-      // toChain;
-      // amount;
-      // return null;
-      // const web3 = new Web3(window.ethereum);
-      // const web3 = new Web3(Web3.givenProvider)
-      // const provider = new Web3(Web3.givenProvider);
-      // const web3 = new Web3(provider);
-      // console.log('web3: %s', web3)
-
-      //   // Get account of the connected wallet (refresh)
-      //   // console.log('accounts: %s', accounts[0]);
-      //   console.log("account: %s", account);
-
-      // set contracts
-      // const endpointContract = await new web3.eth.Contract(ABI_ENDPOINT, ENDPOINT_ADDRESS[fromChain]);
-      // console.log("Endpoint Address: %s", ENDPOINT_ADDRESS[fromChain]);
-      // console.log("Endpoint Contract: %s", endpointContract);
-      // // todo: verify LZFMULTI_ADDRESS[fromChain] is correct.
-      // const tokenContract = await new web3.eth.Contract(ABI_LZFMULTI, LZFMULTI_ADDRESS[fromChain]);
-      // console.log("Token Address: %s", LZFMULTI_ADDRESS[fromChain]);
-      // console.log("Token Contract: %s", tokenContract);
-
-      // bytes to send
-      // const payload = // web3.eth.abi.encodeParameters
-      // encodeAbiParameters(["address", "uint256"]) //[account, amount]);
-      // const params: string[] = ["address", "uint256"];
-      // const values: string[] = [account, amount]
-      // const values: any[] = [account ?? '', amount ?? ''];
-      // const payload = encodeAbiParameters(params: ["address", "uint256"], values: values);
-      // const payload = encodeAbiParameters(["address", "uint256"], [account, amount]);
-      // abi: ["address", "uint256"],
-      // functionName: 'balanceOf',
-      // args: [account, amount]
-      // const payload = getPayload(fromChain, account, amount);
       const bigAmount = BigInt(amount);
+      const version = 1;
       const payload = encodeAbiParameters(
         [
           { name: "account", type: "address" },
@@ -151,11 +119,10 @@ export const BridgeInteraction = () => {
         [account, bigAmount],
       );
       console.log("Payload: %s", payload);
-      const version = 1;
       console.log("Version: %s", version);
       console.log("Destination: %s", toChain);
 
-      // gas required to do transaction on destination chain
+      // gas required to do transaction on destination chain.
       const gas = BigInt(250_000); // (await tokenContract.methods.currentLZGas().call()) ?? 250000;
       if (!gas) {
         console.log("currentLZGas().call() from", LZFMULTI_ADDRESS[fromChain], "failed");
@@ -163,40 +130,33 @@ export const BridgeInteraction = () => {
       console.log("Current LZ Gas from contract is", gas);
 
       // this is the adapter settings for L0
-      // const adapterParams = web3.utils.encodePacked(
-      //   { value: version, type: "uint16" },
-      //   { value: gas, type: "uint256" },
-      // );
       const adapterParams = encodePacked(["uint16", "uint256"], [version, gas]);
       console.log("Adapter Params is", adapterParams);
 
       // this is the payable amount to send
-      const _amountToSend = await readContract({
+      const _gasEstimate = await readContract({
         abi: ABI_ENDPOINT,
         address: ENDPOINT_ADDRESS[fromChain],
         functionName: "estimateFees",
         args: [ENDPOINT_ID[fromChain], LZFMULTI_ADDRESS[fromChain], payload, false, adapterParams],
       });
 
-      const amountToSend = _amountToSend as bigint;
+      const gasEstimate_ = _gasEstimate?.toString().split(",") ?? "0";
+      const gasEstimate = Number(gasEstimate_[0]) / 1e18; // BigInt(gasEstimate_[0])
 
-      // const amountToSend = await endpointContract.methods
-      //   .estimateFees(ENDPOINT_ID[fromChain], LZFMULTI_ADDRESS[fromChain], payload, false, adapterParams)
-      //   .call();
+      console.log("gasEstimate: %s", gasEstimate);
 
-      console.log("amountToSend is %s", amountToSend);
-
-      //   if (!amountToSend) {
-      //     console.log("estimateFees().call() from", ENDPOINT_ADDRESS[toChain], "failed");
-      //   }
-      //   console.log("Estimated fees are", amountToSend);
+      // if (!amountToSend) {
+      //   console.log("estimateFees().call() from", ENDPOINT_ADDRESS[toChain], "failed");
+      // }
+      // console.log("Estimated fees are", amountToSend);
 
       //   // current gas estimate
-      //   let estimatedGas;
-      //   await web3.eth.getGasPrice().then((result: any) => {
-      //     console.log("Estimated gas is", web3.utils.fromWei(result, "ether"));
-      //     estimatedGas = result;
-      //   });
+      // let estimatedGas;
+      // await web3.eth.getGasPrice().then((result: any) => {
+      //   console.log("Estimated gas is", web3.utils.fromWei(result, "ether"));
+      //   estimatedGas = result;
+      // });
 
       //   // the transaction
       //   const value = await tokenContract.methods
@@ -216,16 +176,24 @@ export const BridgeInteraction = () => {
 
       try {
         await writeContract({
-          // wagmiConfig, {
-          // abi: abi,
           abi: ABI_LZFMULTI,
           address: LZFMULTI_ADDRESS[fromChain],
           functionName: "traverseChains",
           args: [ENDPOINT_ID[fromChain], amount],
-          value: amountToSend,
+          account: account,
+          gas: parseGwei(gasEstimate.toString(), "wei"),
+          // gasPrice: parseGwei(gasEstimate.toString(), 'wei'),
+          // value: parseGwei(gasEstimate.toString(), 'wei'),
+          // value: parseEther('0.01'), // amountToSend,
+          // todo: verify
+          // gas: parseGwei('10'), //amountToSend,
+          // maxFeePerGas: parseGwei('20'),
+          // maxPriorityFeePerGas: parseGwei('2'),
+          // gasPrice: estimatedGas ? estimatedGas : "0",
         });
       } catch (e) {
-        console.log(e);
+        // @ts-ignore
+        console.log(e.message);
       }
     };
 
