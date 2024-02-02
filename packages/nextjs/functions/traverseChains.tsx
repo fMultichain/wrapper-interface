@@ -6,7 +6,8 @@ import { ABI_LZFMULTI, ChainId, ENDPOINT_ADDRESS, LZFMULTI_ADDRESS } from "~~/co
 export async function traverseThis(amount: number, toChain: ChainId) {
   // web3
   // todo: verify provider works.
-  const provider = new Web3(Web3.givenProvider);
+  // const provider = new Web3(Web3.givenProvider);
+  const provider = new Web3(window.ethereum);
   const web3 = new Web3(provider);
 
   // Get account of the connected wallet (refresh)
@@ -24,7 +25,7 @@ export async function traverseThis(amount: number, toChain: ChainId) {
   const version = 1;
 
   // gas required to do transaction on destination chain
-  const number = await tokenContract.methods.currentLZGas().call();
+  const number = 250_000; // await tokenContract.methods.currentLZGas().call();
   if (!number) {
     console.log("currentLZGas().call() from", LZFMULTI_ADDRESS[toChain], "failed");
   }
