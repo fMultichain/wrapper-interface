@@ -3,7 +3,6 @@ import Image from "next/image";
 import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { BridgeInteraction } from "~~/components/wrapper-ui/BridgeInteraction";
-// import { ContractData } from "~~/components/wrapper-ui/ContractData"
 import { WrapInteraction } from "~~/components/wrapper-ui/WrapInteraction";
 
 const WrapperUI: NextPage = () => {
